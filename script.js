@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicBtn = document.getElementById('magic-music');
     const bgMusic = new Audio('assets/soundlofi.mp3'); 
     const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
-    const hoverSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // Very light hover tick
+    const hoverSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'); // Sharper 'pop' sound
     clickSound.volume = 0.5;
-    hoverSound.volume = 0.2; // Keep it very subtle
+    hoverSound.volume = 0.4; // Increased volume for clearer feedback
     
     bgMusic.loop = true;
     let isMagicOn = false;
