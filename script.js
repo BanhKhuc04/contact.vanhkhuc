@@ -57,8 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Music & Sound Effects ---
     const musicBtn = document.getElementById('magic-music');
     const bgMusic = new Audio('assets/soundlofi.mp3'); 
-    const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); // Soft click sound
+    const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
+    const hoverSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // Very light hover tick
     clickSound.volume = 0.5;
+    hoverSound.volume = 0.2; // Keep it very subtle
     
     bgMusic.loop = true;
     let isMagicOn = false;
@@ -95,11 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Add Click Sound to All Buttons ---
+    // --- Add Sounds to All Buttons ---
     const allButtons = document.querySelectorAll('.btn-link, .magic-btn');
     allButtons.forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            hoverSound.currentTime = 0;
+            hoverSound.play().catch(e => {});
+        });
+        
         btn.addEventListener('mousedown', () => {
-            clickSound.currentTime = 0; // Reset to start if clicked rapidly
+            clickSound.currentTime = 0;
             clickSound.play().catch(e => {});
         });
     });
