@@ -54,10 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 600 + (index * 80));
     });
 
-    // --- Magic Music Toggle ---
+    // --- Music & Sound Effects ---
     const musicBtn = document.getElementById('magic-music');
-    // Use the local lofi file provided by the user
     const bgMusic = new Audio('assets/soundlofi.mp3'); 
+    const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); // Soft click sound
+    clickSound.volume = 0.5;
+    
     bgMusic.loop = true;
     let isMagicOn = false;
 
@@ -92,6 +94,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 150);
         });
     }
+
+    // --- Add Click Sound to All Buttons ---
+    const allButtons = document.querySelectorAll('.btn-link, .magic-btn');
+    allButtons.forEach(btn => {
+        btn.addEventListener('mousedown', () => {
+            clickSound.currentTime = 0; // Reset to start if clicked rapidly
+            clickSound.play().catch(e => {});
+        });
+    });
 
     // --- Subtle Card Tilt ---
     const card = document.querySelector('.main-card');
