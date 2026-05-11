@@ -58,9 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicBtn = document.getElementById('magic-music');
     const bgMusic = new Audio('assets/soundlofi.mp3'); 
     const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
-    const hoverSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'); // Sharper 'pop' sound
-    clickSound.volume = 0.5;
-    hoverSound.volume = 0.4; // Increased volume for clearer feedback
+    const hoverSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'); 
+    
+    // Preload for better response
+    clickSound.preload = 'auto';
+    hoverSound.preload = 'auto';
+    
+    clickSound.volume = 0.6;
+    hoverSound.volume = 0.8; // Set higher to be sure it's heard
     
     bgMusic.loop = true;
     let isMagicOn = false;
@@ -101,13 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const allButtons = document.querySelectorAll('.btn-link, .magic-btn');
     allButtons.forEach(btn => {
         btn.addEventListener('mouseenter', () => {
+            console.log('Hovering over button...');
             hoverSound.currentTime = 0;
-            hoverSound.play().catch(e => {});
+            hoverSound.play().catch(err => console.log('Hover sound blocked: ', err));
         });
         
         btn.addEventListener('mousedown', () => {
+            console.log('Clicking button...');
             clickSound.currentTime = 0;
-            clickSound.play().catch(e => {});
+            clickSound.play().catch(err => console.log('Click sound blocked: ', err));
         });
     });
 
