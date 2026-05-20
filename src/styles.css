@@ -1,5 +1,5 @@
 :root {
-  --bg-dark: #08040f;
+  --bg-dark: #05000d;
   --bg-deep: #0f051c;
   --bg-panel: rgba(18, 6, 34, 0.82);
   --primary: #d6a9ff;
@@ -13,7 +13,7 @@
   --body-font: "Poppins", "Inter", sans-serif;
   --pointer-x: 50%;
   --pointer-y: 50%;
-  --hero-shift-x: 0px;
+  --hero-shift-x: -135px;
 }
 
 *,
@@ -57,7 +57,7 @@ select {
   width: 100%;
   height: 100dvh;
   overflow: hidden;
-  background: var(--bg-dark);
+  background: #05000d;
   isolation: isolate;
 }
 
@@ -92,90 +92,96 @@ select {
   z-index: 0;
   overflow: hidden;
   cursor: pointer;
-  background: #08040f;
+  background: #05000d;
 }
 
-.scene-fill,
 .scene-media {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100dvh;
-  will-change: opacity, filter;
+  object-fit: cover;
+  object-position: center center;
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   pointer-events: none;
   user-select: none;
   transition: none;
 }
 
-.scene-fill {
-  object-fit: cover;
-  transform: scale(1.08);
-  filter: blur(18px) brightness(0.74) saturate(1.18);
-  opacity: 0.9;
-}
-
 .scene-media {
-  object-fit: contain;
-  object-position: center center;
-  filter: brightness(0.9) saturate(1.08);
+  filter: none;
 }
 
-.scene-video,
-.scene-fill-video {
+.scene-image {
+  opacity: 1;
+  z-index: 0;
+}
+
+.scene-video {
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.page-shell.playing-video .scene-image {
   opacity: 0;
 }
 
-.scene-image,
-.scene-fill-image {
+.page-shell.playing-video .scene-video {
   opacity: 1;
 }
 
 .scene-overlay {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
+  opacity: 0.42;
   background:
-    radial-gradient(circle at 70% 42%, rgba(126, 55, 196, 0.14), transparent 42%),
-    radial-gradient(circle at 16% 22%, rgba(255, 255, 255, 0.06), transparent 16%),
-    linear-gradient(90deg, rgba(5, 1, 12, 0.28), rgba(12, 4, 28, 0.12) 42%, rgba(4, 1, 10, 0.4));
+    radial-gradient(circle at 72% 42%, rgba(126, 55, 196, 0.06), transparent 42%),
+    linear-gradient(90deg, rgba(4, 0, 12, 0.015), rgba(9, 2, 24, 0.08));
 }
 
 .scene-haze {
   position: fixed;
-  inset: -8%;
-  z-index: 4;
+  inset: 0;
+  z-index: 1;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 26% 58%, rgba(195, 145, 255, 0.2), transparent 30%),
-    radial-gradient(circle at 78% 26%, rgba(120, 65, 210, 0.18), transparent 26%),
-    radial-gradient(circle at 54% 80%, rgba(255, 255, 255, 0.05), transparent 16%);
+  opacity: 0.1;
+  background: radial-gradient(circle at 50% 50%, rgba(155, 94, 255, 0.06), transparent 56%);
   mix-blend-mode: screen;
-  filter: blur(34px);
-  opacity: 0.82;
-  animation: hazeDrift 18s ease-in-out infinite;
+}
+
+.page-shell.playing-video .scene-overlay {
+  opacity: 0.28;
+}
+
+.page-shell.playing-video .scene-haze {
+  opacity: 0.06;
 }
 
 .dream-mist-layer {
   position: fixed;
-  inset: -12%;
+  inset: -10%;
   z-index: 22;
   pointer-events: none;
   opacity: 0;
-  transform: translateX(-18%) scale(1.08);
+  transform: translateX(-18%);
   background:
-    radial-gradient(circle at 28% 52%, rgba(218, 175, 255, 0.32), transparent 28%),
-    radial-gradient(circle at 52% 48%, rgba(150, 80, 255, 0.22), transparent 36%),
+    radial-gradient(circle at 28% 52%, rgba(218, 175, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 52% 48%, rgba(150, 80, 255, 0.1), transparent 36%),
     linear-gradient(
       105deg,
       transparent 0%,
-      rgba(70, 18, 118, 0.1) 22%,
-      rgba(170, 95, 255, 0.32) 46%,
-      rgba(235, 210, 255, 0.3) 52%,
-      rgba(115, 45, 200, 0.22) 62%,
+      rgba(70, 18, 118, 0.04) 22%,
+      rgba(170, 95, 255, 0.16) 46%,
+      rgba(235, 210, 255, 0.12) 52%,
+      rgba(115, 45, 200, 0.1) 62%,
       transparent 100%
     );
-  filter: blur(28px);
+  filter: blur(24px);
   mix-blend-mode: screen;
 }
 
@@ -186,10 +192,10 @@ select {
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(circle at 30% 50%, rgba(255, 245, 255, 0.42), transparent 12%),
-    radial-gradient(circle at 42% 52%, rgba(196, 135, 255, 0.26), transparent 30%),
-    radial-gradient(circle at 70% 45%, rgba(115, 45, 200, 0.12), transparent 46%);
-  filter: blur(18px);
+    radial-gradient(circle at 30% 50%, rgba(255, 245, 255, 0.16), transparent 12%),
+    radial-gradient(circle at 42% 52%, rgba(196, 135, 255, 0.1), transparent 30%),
+    radial-gradient(circle at 70% 45%, rgba(115, 45, 200, 0.06), transparent 46%);
+  filter: blur(16px);
   mix-blend-mode: screen;
 }
 
@@ -200,9 +206,9 @@ select {
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(circle at 31% 50%, rgba(246, 225, 255, 0.42), transparent 18%),
-    radial-gradient(circle at 55% 45%, rgba(155, 85, 255, 0.18), transparent 50%);
-  filter: blur(24px);
+    radial-gradient(circle at 31% 50%, rgba(246, 225, 255, 0.14), transparent 18%),
+    radial-gradient(circle at 55% 45%, rgba(155, 85, 255, 0.06), transparent 50%);
+  filter: blur(18px);
   mix-blend-mode: screen;
 }
 
@@ -270,6 +276,10 @@ select {
 }
 
 @media (min-width: 2200px) {
+  :root {
+    --hero-shift-x: -165px;
+  }
+
   .hero-content {
     top: 43%;
     right: clamp(170px, 10vw, 350px);
@@ -278,6 +288,10 @@ select {
 }
 
 @media (max-width: 1500px) {
+  :root {
+    --hero-shift-x: -95px;
+  }
+
   .hero-content {
     top: 42%;
     right: clamp(46px, 4vw, 92px);

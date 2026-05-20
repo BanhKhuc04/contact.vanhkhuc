@@ -1,11 +1,16 @@
 export default function HeroContent() {
   return (
     <section className="hero-ui">
-      <div className="hero-content" onClick={(event) => event.stopPropagation()}>
+      <div
+        className="hero-content"
+        onClick={(event) => event.stopPropagation()}
+        onPointerDown={(event) => event.stopPropagation()}
+      >
         <div className="title-block">
           <div
             className="title-avatar"
             onClick={(event) => event.stopPropagation()}
+            onPointerDown={(event) => event.stopPropagation()}
           >
             <span className="avatar-aura avatar-aura-1" />
             <span className="avatar-aura avatar-aura-2" />
@@ -25,6 +30,7 @@ export default function HeroContent() {
         <div
           className="social-panel"
           onClick={(event) => event.stopPropagation()}
+          onPointerDown={(event) => event.stopPropagation()}
         >
           <p className="social-kicker">Social links</p>
           <h2>Connect with Me</h2>

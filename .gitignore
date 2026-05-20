@@ -28,3 +28,8 @@ desktop-preview*.png
 mobile-preview*.png
 script.js.old
 style.css.old
+
+# Unused local asset mirrors
+assets/audio/
+assets/images/
+assets/videos/

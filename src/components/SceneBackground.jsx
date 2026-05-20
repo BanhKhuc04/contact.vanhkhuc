@@ -75,8 +75,6 @@ function Particles() {
 export default function SceneBackground({
   imageRef,
   videoRef,
-  fillImageRef,
-  fillVideoRef,
   mistRef,
   dissolveRef,
   softGlowRef,
@@ -86,24 +84,6 @@ export default function SceneBackground({
   return (
     <>
       <div className="scene-stage" onClick={onSceneClick}>
-        <img
-          ref={fillImageRef}
-          className="scene-fill scene-fill-image"
-          src="/assets/images/satella-bg.jpg"
-          alt=""
-          aria-hidden="true"
-          draggable="false"
-        />
-
-        <video
-          ref={fillVideoRef}
-          className="scene-fill scene-fill-video"
-          src="/assets/videos/satella-loop.mp4"
-          muted
-          playsInline
-          preload="auto"
-        />
-
         <img
           ref={imageRef}
           className="scene-media scene-image"

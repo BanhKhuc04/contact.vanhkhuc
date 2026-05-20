@@ -3,6 +3,7 @@ export default function MusicDock({ isAudioPlaying, toggleMusic }) {
     <div
       className={`music-dock ${isAudioPlaying ? 'is-playing' : ''}`}
       onClick={(e) => e.stopPropagation()}
+      onPointerDown={(e) => e.stopPropagation()}
     >
       <div className="music-info">
         <span className="music-title">Satella Theme</span>
