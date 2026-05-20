@@ -668,15 +668,55 @@ select {
   pointer-events: none;
 }
 
+.anime-logo-shell {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: clamp(176px, 10vw, 240px);
+  min-height: 64px;
+  padding: 6px 8px 2px 18px;
+  pointer-events: none;
+}
+
+.anime-logo-cloud {
+  position: absolute;
+  inset: auto 0 0 auto;
+  border-radius: 999px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(236, 218, 255, 0.2), rgba(154, 84, 255, 0.1) 52%, transparent 76%);
+  filter: blur(18px);
+  opacity: 0.9;
+  transform: translate3d(0, 0, 0);
+}
+
+.anime-logo-cloud-1 {
+  width: clamp(146px, 9vw, 212px);
+  height: clamp(52px, 4.4vw, 82px);
+  right: 2px;
+  bottom: 4px;
+}
+
+.anime-logo-cloud-2 {
+  width: clamp(108px, 6.5vw, 162px);
+  height: clamp(38px, 3.5vw, 58px);
+  right: 34px;
+  bottom: 12px;
+  opacity: 0.62;
+  filter: blur(24px);
+}
+
 .anime-logo {
-  width: clamp(128px, 8vw, 190px);
+  position: relative;
+  z-index: 1;
+  width: clamp(144px, 8.8vw, 214px);
   height: auto;
   object-fit: contain;
-  opacity: 0.86;
+  opacity: 0.92;
   filter:
-    drop-shadow(0 0 10px rgba(210, 170, 255, 0.45))
-    drop-shadow(0 0 24px rgba(140, 70, 255, 0.32));
-  transform: translateX(-4px);
+    drop-shadow(0 0 12px rgba(230, 200, 255, 0.52))
+    drop-shadow(0 0 28px rgba(140, 70, 255, 0.36));
+  transform: translateX(-2px);
   transition:
     opacity 0.28s ease,
     transform 0.28s ease,
@@ -686,10 +726,10 @@ select {
 
 .anime-logo:hover {
   opacity: 1;
-  transform: translateX(-4px) translateY(-3px) scale(1.04);
+  transform: translateX(-2px) translateY(-4px) scale(1.05);
   filter:
-    drop-shadow(0 0 14px rgba(235, 210, 255, 0.7))
-    drop-shadow(0 0 34px rgba(170, 90, 255, 0.5));
+    drop-shadow(0 0 16px rgba(245, 225, 255, 0.8))
+    drop-shadow(0 0 38px rgba(170, 90, 255, 0.54));
 }
 
 .music-dock {

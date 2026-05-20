@@ -1,12 +1,16 @@
 export default function MusicDock({ isAudioPlaying, toggleMusic }) {
   return (
     <div className="corner-media-stack">
-      <img
-        className="anime-logo"
-        src="/assets/images/re-zero-logo.png"
-        alt="Re:Zero"
-        draggable="false"
-      />
+      <div className="anime-logo-shell">
+        <span className="anime-logo-cloud anime-logo-cloud-1" aria-hidden="true" />
+        <span className="anime-logo-cloud anime-logo-cloud-2" aria-hidden="true" />
+        <img
+          className="anime-logo"
+          src="/assets/images/re-zero-logo.png"
+          alt="Re:Zero"
+          draggable="false"
+        />
+      </div>
 
       <div
         className={`music-dock ${isAudioPlaying ? 'is-playing' : ''}`}
