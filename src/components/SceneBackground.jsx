@@ -87,7 +87,7 @@ export default function SceneBackground({
         <img
           ref={imageRef}
           className="scene-media scene-image"
-          src="/assets/images/satella-bg.jpg"
+          src={`${import.meta.env.BASE_URL}assets/images/satella-bg.jpg`}
           alt="Satella fantasy background"
           draggable="false"
         />
@@ -95,7 +95,7 @@ export default function SceneBackground({
         <video
           ref={videoRef}
           className="scene-media scene-video"
-          src="/assets/videos/satella-loop.mp4"
+          src={`${import.meta.env.BASE_URL}assets/videos/satella-loop.mp4`}
           muted
           playsInline
           preload="auto"
