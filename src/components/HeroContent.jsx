@@ -17,7 +17,7 @@ export default function HeroContent() {
             <span className="avatar-spark avatar-spark-1" />
             <span className="avatar-spark avatar-spark-2" />
             <img
-              src="/assets/images/satella-avatar.jpg"
+              src={`${import.meta.env.BASE_URL}assets/images/satella-avatar.jpg`}
               alt="Satella avatar"
               draggable="false"
             />
