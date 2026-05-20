@@ -367,9 +367,10 @@ select {
     0 0 36px rgba(214, 170, 255, 0.64),
     0 0 96px rgba(150, 70, 255, 0.4);
   transition:
-    transform 0.35s ease,
-    filter 0.35s ease,
-    box-shadow 0.35s ease;
+    transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.38s ease,
+    box-shadow 0.38s ease;
+  will-change: transform;
 }
 
 .title-avatar img {
@@ -434,29 +435,67 @@ select {
   filter: blur(22px);
 }
 
+.avatar-spark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.92), rgba(214, 170, 255, 0.42) 62%, transparent 100%);
+  box-shadow: 0 0 14px rgba(224, 188, 255, 0.42);
+  opacity: 0.46;
+  transition: transform 0.38s ease, opacity 0.38s ease, box-shadow 0.38s ease;
+}
+
+.avatar-spark-1 {
+  top: 10%;
+  right: 8%;
+}
+
+.avatar-spark-2 {
+  left: 6%;
+  bottom: 14%;
+  width: 8px;
+  height: 8px;
+  opacity: 0.34;
+}
+
 .title-avatar:hover {
-  transform: scale(1.1);
-  filter: brightness(1.12) saturate(1.1);
+  transform: translateY(-6px) scale(1.13);
+  filter: brightness(1.15) saturate(1.14);
   box-shadow:
-    0 0 54px rgba(238, 210, 255, 0.94),
-    0 0 136px rgba(170, 90, 255, 0.54);
+    0 0 58px rgba(238, 210, 255, 0.96),
+    0 0 145px rgba(170, 90, 255, 0.56);
 }
 
 .title-avatar:hover::before {
   opacity: 1;
-  animation-duration: 3.2s;
+  animation-duration: 2.5s;
 }
 
 .title-avatar:hover .avatar-aura-1 {
-  transform: scale(1.1);
-  opacity: 0.9;
+  transform: scale(1.08);
+  opacity: 1;
   filter: blur(18px);
 }
 
 .title-avatar:hover .avatar-aura-2 {
   transform: scale(1.16);
-  opacity: 0.62;
+  opacity: 0.68;
   filter: blur(30px);
+}
+
+.title-avatar:hover .avatar-spark-1 {
+  transform: translate(2px, -5px) scale(1.18);
+  opacity: 0.86;
+  box-shadow: 0 0 18px rgba(244, 220, 255, 0.72);
+}
+
+.title-avatar:hover .avatar-spark-2 {
+  transform: translate(-3px, 4px) scale(1.14);
+  opacity: 0.72;
+  box-shadow: 0 0 16px rgba(214, 170, 255, 0.62);
 }
 
 .title-block h1 {
@@ -617,12 +656,48 @@ select {
   transform: translateX(3px);
 }
 
-.music-dock {
+.corner-media-stack {
   position: fixed;
   right: clamp(20px, 2vw, 34px);
   bottom: clamp(20px, 2vw, 34px);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.anime-logo {
+  width: clamp(128px, 8vw, 190px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.86;
+  filter:
+    drop-shadow(0 0 10px rgba(210, 170, 255, 0.45))
+    drop-shadow(0 0 24px rgba(140, 70, 255, 0.32));
+  transform: translateX(-4px);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    filter 0.28s ease;
+  pointer-events: auto;
+}
+
+.anime-logo:hover {
+  opacity: 1;
+  transform: translateX(-4px) translateY(-3px) scale(1.04);
+  filter:
+    drop-shadow(0 0 14px rgba(235, 210, 255, 0.7))
+    drop-shadow(0 0 34px rgba(170, 90, 255, 0.5));
+}
+
+.music-dock {
+  position: relative;
+  right: auto;
+  bottom: auto;
   z-index: 35;
-  width: 292px;
+  width: 306px;
   min-height: 124px;
   max-width: calc(100vw - 40px);
   padding: 18px;
@@ -641,6 +716,7 @@ select {
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   overflow: hidden;
+  pointer-events: auto;
 }
 
 .music-dock::before {
@@ -673,19 +749,28 @@ select {
 
 .music-title {
   display: block;
-  font-size: 0.92rem;
+  white-space: nowrap;
+  font-size: 0.98rem;
   font-weight: 800;
   color: #fff;
   line-height: 1.25;
 }
 
+.music-artist {
+  display: block;
+  margin-top: 3px;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  color: rgba(232, 205, 255, 0.76);
+}
+
 .music-status {
   display: block;
-  margin-top: 4px;
+  margin-top: 6px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(226, 190, 255, 0.76);
-  font-size: 0.62rem;
+  color: rgba(226, 190, 255, 0.8);
+  font-size: 0.66rem;
 }
 
 .music-eq {
@@ -842,7 +927,7 @@ select {
   }
 
   .hero-ui,
-  .music-dock {
+  .corner-media-stack {
     filter: blur(5px) brightness(0.42);
     pointer-events: none;
   }

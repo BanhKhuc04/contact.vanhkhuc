@@ -14,6 +14,8 @@ export default function HeroContent() {
           >
             <span className="avatar-aura avatar-aura-1" />
             <span className="avatar-aura avatar-aura-2" />
+            <span className="avatar-spark avatar-spark-1" />
+            <span className="avatar-spark avatar-spark-2" />
             <img
               src="/assets/images/satella-avatar.jpg"
               alt="Satella avatar"
