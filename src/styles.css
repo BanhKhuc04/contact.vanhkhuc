@@ -353,9 +353,9 @@ select {
 }
 
 .title-avatar {
-  width: clamp(126px, 6vw, 152px);
-  height: clamp(126px, 6vw, 152px);
-  margin: 0 auto 14px;
+  width: clamp(138px, 6.6vw, 168px);
+  height: clamp(138px, 6.6vw, 168px);
+  margin: -63px auto 20px;
   border-radius: 999px;
   position: relative;
   padding: 6px;
