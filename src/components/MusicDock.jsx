@@ -6,7 +6,7 @@ export default function MusicDock({ isAudioPlaying, toggleMusic }) {
         <span className="anime-logo-cloud anime-logo-cloud-2" aria-hidden="true" />
         <img
           className="anime-logo"
-          src="/assets/images/re-zero-logo.png"
+          src={`${import.meta.env.BASE_URL}assets/images/re-zero-logo.png`}
           alt="Re:Zero"
           draggable="false"
         />
