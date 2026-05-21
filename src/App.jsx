@@ -407,7 +407,7 @@ export default function App() {
 
       <audio
         ref={audioRef}
-        src="/assets/audio/satella-theme.mp3"
+        src={`${import.meta.env.BASE_URL}assets/audio/satella-theme.mp3`}
         loop
         preload="auto"
       />
