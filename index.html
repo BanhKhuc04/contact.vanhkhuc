@@ -1,16 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Satella | By VanhKhuc</title>
-  <meta name="description" content="A quiet corner on the internet — VanhKhuc's personal landing page." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7fbff" />
+  <meta name="description" content="Trang liên hệ cá nhân của Khúc Việt Anh - Full-stack developer." />
+  <title>Khúc Việt Anh — Contact</title>
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <div class="page-glow glow-one" aria-hidden="true"></div>
+  <div class="page-glow glow-two" aria-hidden="true"></div>
+
+  <header class="topbar reveal reveal-1">
+    <a class="brand" href="index.html" aria-label="Khúc Việt Anh - Trang liên hệ">
+      <img src="assets/logo.png" alt="KA logo" />
+      <span>VanhKhuc</span>
+    </a>
+
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a href="index.html" class="active">Contact</a>
+      <a href="cv.html">CV</a>
+    </nav>
+
+    <a class="cv-button" href="cv.html" aria-label="Xem CV trực tiếp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.2-5.2 9.2-5.2S21.2 12 21.2 12 18 17.2 12 17.2 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.4"/></svg>
+      <span>Xem CV</span>
+    </a>
+  </header>
+
+  <main id="top" class="shell">
+    <section class="hero" id="contact">
+      <div class="intro">
+        <div class="profile-row reveal reveal-2">
+          <div class="avatar-wrap" id="avatarTilt">
+            <div class="avatar-ring"></div>
+            <div class="avatar-halo"></div>
+            <img class="avatar" src="assets/avatar.jpg" alt="Khúc Việt Anh" />
+            <span class="status-dot" title="Open to opportunities"></span>
+          </div>
+          <div class="profile-copy">
+            <strong>Khúc Việt Anh</strong>
+            <span>Full-stack developer</span>
+          </div>
+        </div>
+
+        <div class="eyebrow reveal reveal-3"><span>GET IN TOUCH</span><i></i></div>
+        <h1 class="reveal reveal-4">Let’s <span>connect.</span></h1>
+        <p class="lead reveal reveal-5">Open to collaborations, projects, and new opportunities.</p>
+
+        <div class="quick-actions reveal reveal-6">
+          <a class="primary-pill" href="mailto:vanhkhuc2k5@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            Email me
+          </a>
+          <a class="secondary-pill" href="cv.html">
+            View CV
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="contacts" aria-label="Liên kết liên hệ">
+        <a class="contact-card reveal reveal-3" href="mailto:vanhkhuc2k5@gmail.com">
+          <span class="icon-box mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
+          <span class="contact-text"><b>Email</b><small>vanhkhuc2k5@gmail.com</small></span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="contact-card reveal reveal-4" href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer">
+          <span class="icon-box github-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.5 9.5 0 0 0-3 18.52c.48.09.65-.2.65-.46v-1.8c-2.65.58-3.2-1.13-3.2-1.13-.43-1.1-1.06-1.39-1.06-1.39-.87-.6.07-.58.07-.58.96.07 1.47.99 1.47.99.85 1.46 2.24 1.04 2.79.8.09-.62.33-1.04.61-1.28-2.11-.24-4.33-1.05-4.33-4.7 0-1.04.37-1.89.98-2.55-.1-.24-.43-1.21.09-2.52 0 0 .8-.26 2.62.97a9.08 9.08 0 0 1 4.77 0c1.82-1.23 2.62-.97 2.62-.97.52 1.31.19 2.28.09 2.52.61.66.98 1.51.98 2.55 0 3.66-2.23 4.46-4.35 4.69.34.29.64.87.64 1.76v2.61c0 .26.17.55.65.46A9.5 9.5 0 0 0 12 2.8Z"/></svg></span>
+          <span class="contact-text"><b>GitHub</b><small>github.com/BanhKhuc04</small></span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="contact-card reveal reveal-5" href="https://www.facebook.com/vanhkhuc2005" target="_blank" rel="noreferrer">
+          <span class="icon-box facebook-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 8.5V6.8c0-.7.47-.87.8-.87H17V2.1h-3.04c-3.38 0-4.15 2.54-4.15 4.16V8.5H8v4.3h1.81V22h4.19v-9.2h2.8l.37-4.3H14Z"/></svg></span>
+          <span class="contact-text"><b>Facebook</b><small>facebook.com/vanhkhuc2005</small></span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="contact-card reveal reveal-6" href="https://www.linkedin.com/in/vi%E1%BB%87t-anh-kh%C3%BAc-98b37b340/" target="_blank" rel="noreferrer">
+          <span class="icon-box linkedin-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8.5V20H1.3V8.5H5ZM3.16 3A2.15 2.15 0 1 1 3.15 7.3 2.15 2.15 0 0 1 3.16 3ZM22.7 13.4V20H19v-6.16c0-1.55-.55-2.6-1.93-2.6-1.05 0-1.68.71-1.96 1.4-.1.25-.13.59-.13.94V20h-3.7s.05-10.42 0-11.5h3.7v1.63c.49-.76 1.37-1.84 3.34-1.84 2.44 0 4.28 1.6 4.28 5.11Z"/></svg></span>
+          <span class="contact-text"><b>LinkedIn</b><small>Việt Anh Khúc</small></span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer reveal reveal-6">
+    <div class="footer-brand"><img src="assets/logo.png" alt="" /><span>Build a better version.</span></div>
+    <span>© 2026 Khúc Việt Anh. All rights reserved.</span>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
