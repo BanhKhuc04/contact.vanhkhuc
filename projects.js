@@ -1,503 +1,469 @@
 /* ==========================================================
-   Đài quan sát Vanh — vũ trụ dự án
-   Thêm dự án: thêm 1 object vào PROJECTS (APPS nằm trong apps.js)
-   - live: HTML của module → "Phóng ngay" + "Tải .html"
-   - url: link ngoài/nội bộ → "Mở web"
-   - download: link file (zip…) → "Tải .zip"
-   - planet: màu (c1, c2), cỡ, vành đai, mặt trăng
+   Vũ trụ của Vanh — hành trình 3D qua các dự án
+   Thêm dự án: thêm 1 object vào PROJECTS (mini-app nằm trong apps.js)
    ========================================================== */
-const PROJECTS = [
-  { id: "exanh", title: "eXanh.online", type: "web", year: "05.2026", url: "https://exanh.online", art: true,
-    desc: "Thiên thể đầu tiên của hệ: website cá nhân xây bằng HTML, CSS, JavaScript với AI hỗ trợ viết code, tìm lỗi và kiểm thử.",
-    tags: ["HTML", "CSS", "JavaScript", "AI"], planet: { c1: "#7dffb0", c2: "#0f6b4a", size: 15, moon: true } },
-  { id: "contact-cv", title: "Contact + CV", type: "template", year: "2026", url: "index.html", src: "index.html",
-    download: "https://github.com/BanhKhuc04/contact.vanhkhuc/archive/refs/heads/main.zip",
-    desc: "Bộ trang liên hệ và CV phong cách Apple Glass. Deploy lên GitHub Pages chỉ với một lần push.",
-    tags: ["Template", "GitHub Pages"], planet: { c1: "#8fc0ff", c2: "#1b3a8f", size: 17, ring: true } },
-  { id: "pomodoro", title: "Đồng hồ quỹ đạo", type: "tool", year: "2026", live: APPS.pomodoro,
-    desc: "Pomodoro 25 / 5 / 15 phút: một vệ tinh chạy quanh quỹ đạo đếm ngược giúp bạn giữ nhịp tập trung.",
-    tags: ["Năng suất", "JavaScript"], planet: { c1: "#ff9a6b", c2: "#8f2a1a", size: 11 } },
-  { id: "palette", title: "Tinh vân màu", type: "tool", year: "2026", live: APPS.palette,
-    desc: "Sinh bảng 5 màu hài hoà kèm tinh vân xem trước. Nhấn Space để trộn lại, bấm vào ngôi sao để copy mã HEX.",
-    tags: ["Thiết kế", "Màu sắc"], planet: { c1: "#ff7ad9", c2: "#5a1a8f", size: 14, ring: true } },
-  { id: "sketch", title: "Bảng chòm sao", type: "fun", year: "2026", live: APPS.sketch,
-    desc: "Thả sao lên bầu trời, chúng tự nối thành chòm. Đặt tên cho chòm sao của bạn rồi lưu thành ảnh PNG.",
-    tags: ["Canvas", "Sáng tạo"], planet: { c1: "#c8a6ff", c2: "#3a1f8f", size: 12, moon: true } },
-  { id: "password", title: "Mã khoá lượng tử", type: "tool", year: "2026", live: APPS.password,
-    desc: "Tạo mật khẩu mạnh bằng Web Crypto, có đo entropy. Mọi thứ chạy trong trình duyệt, không gửi đi đâu cả.",
-    tags: ["Bảo mật", "Tiện ích"], planet: { c1: "#6cf0ff", c2: "#0b4a6b", size: 10 } },
-  { id: "biolink", title: "Thẻ phi hành gia", type: "template", year: "2026", live: APPS.biolink,
-    desc: "Template link-in-bio một file duy nhất. Tải về, đổi tên và đường link là có ngay thẻ định danh của riêng bạn.",
-    tags: ["Template", "1 file"], planet: { c1: "#ffd27a", c2: "#8a5a12", size: 13, ring: true } },
-];
-const TYPE = { web: "Website", tool: "Công cụ", template: "Template", fun: "Thử nghiệm" };
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const pad = (n) => String(n).padStart(2, "0");
-const kb = (p) => (p.live ? (new Blob([p.live]).size / 1024).toFixed(1) + " KB" : p.download ? "repo .zip" : "web");
+import * as THREE from "three";
 
+const PROJECTS = [
+  { id: "exanh", title: "eXanh.online", kind: "Website", tagline: "Thế giới xanh đầu tiên", year: "2026",
+    url: "https://exanh.online", size: "Web",
+    desc: "Website cá nhân đầu tay — xây bằng HTML, CSS và JavaScript, với AI đồng hành viết code, tìm lỗi và kiểm thử từng chi tiết.",
+    planet: { type: "jungle", r: 2.2, atmo: "#7fe0c0", clouds: true } },
+  { id: "contact-cv", title: "Contact + CV", kind: "Template", tagline: "Gã khổng lồ băng giá", year: "2026",
+    url: "index.html", download: "https://github.com/BanhKhuc04/contact.vanhkhuc/archive/refs/heads/main.zip", size: "Repo .zip",
+    desc: "Bộ trang liên hệ và CV phong cách Apple Glass. Tải mã nguồn về, đổi thông tin và deploy lên GitHub Pages chỉ với một lần push.",
+    planet: { type: "icegiant", r: 2.8, atmo: "#9cc8ff", ring: { inner: 1.45, outer: 2.2, tint: [190, 210, 235], tilt: 0.42 } } },
+  { id: "pomodoro", title: "Pomodoro", kind: "Công cụ", tagline: "Hành tinh dung nham — nơi thời gian cháy", year: "2026",
+    live: () => APPS.pomodoro,
+    desc: "Đồng hồ tập trung 25 / 5 / 15 phút với vệ tinh chạy quanh quỹ đạo đếm ngược. Giữ nhịp làm việc sâu mà không cần cài gì.",
+    planet: { type: "lava", r: 1.9, atmo: "#ff8a4a" } },
+  { id: "palette", title: "Bảng màu", kind: "Công cụ", tagline: "Khổng lồ khí nhiều sắc màu", year: "2026",
+    live: () => APPS.palette,
+    desc: "Sinh bảng 5 màu hài hoà kèm tinh vân xem trước. Nhấn Space để trộn lại, bấm vào một màu để sao chép mã HEX.",
+    planet: { type: "pastel", r: 2.5, atmo: "#f2b8c6" } },
+  { id: "sketch", title: "Bảng chòm sao", kind: "Thử nghiệm", tagline: "Mặt trăng băng — một bầu trời để vẽ", year: "2026",
+    live: () => APPS.sketch,
+    desc: "Thả từng ngôi sao lên nền trời, chúng tự nối thành chòm. Đặt tên cho chòm sao của riêng bạn rồi lưu lại thành ảnh PNG.",
+    planet: { type: "ice", r: 2.0, atmo: "#cfe6ff" } },
+  { id: "password", title: "Tạo mật khẩu", kind: "Công cụ", tagline: "Thế giới lượng tử", year: "2026",
+    live: () => APPS.password,
+    desc: "Sinh mật khẩu mạnh bằng Web Crypto ngay trong trình duyệt, có đo entropy. Không có gì được gửi đi đâu cả.",
+    planet: { type: "quantum", r: 1.8, atmo: "#7fe3ea" } },
+  { id: "biolink", title: "Trang link cá nhân", kind: "Template", tagline: "Sa mạc vàng có vành đai", year: "2026",
+    live: () => APPS.biolink,
+    desc: "Template link-in-bio gói gọn trong một file. Tải về, đổi tên và các đường link là có ngay trang giới thiệu của riêng bạn.",
+    planet: { type: "desert", r: 2.4, atmo: "#ffcf8a", ring: { inner: 1.4, outer: 2.6, tint: [225, 190, 140], tilt: -0.32 } } },
+];
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const pad = (n) => String(n).padStart(2, "0");
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 PROJECTS.forEach((p, i) => {
   p.no = pad(i + 1);
-  p.orbit = i;
-  p.speed = 0.22 / Math.pow(1 + i * 0.55, 1.1); // càng xa càng chậm
-  p.phase = (i * 2.399) % (Math.PI * 2);        // góc vàng
+  if (p.live) p.size = (new Blob([p.live()]).size / 1024).toFixed(1) + " KB";
 });
 
-/* ===================== BẦU TRỜI SAO ===================== */
-(() => {
-  const cv = document.getElementById("sky");
-  const ctx = cv.getContext("2d");
-  let w, h, dpr, stars = [], shoot = null, nextShoot = performance.now() + 3000, mx = 0, my = 0;
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    w = innerWidth; h = innerHeight;
-    cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = Math.round((w * h) / 2600);
-    stars = Array.from({ length: n }, () => ({
-      x: Math.random() * w, y: Math.random() * h * 1.6, z: Math.random() ** 2,
-      tw: Math.random() * Math.PI * 2, hue: Math.random() < 0.12 ? (Math.random() < 0.5 ? "#ffd9a8" : "#a8c8ff") : "#ffffff",
-    }));
-  };
-  resize(); addEventListener("resize", resize);
-  addEventListener("pointermove", (e) => { mx = e.clientX / w - 0.5; my = e.clientY / h - 0.5; }, { passive: true });
-  function frame(t) {
-    ctx.clearRect(0, 0, w, h);
-    const sy = scrollY;
-    for (const s of stars) {
-      const depth = 0.15 + s.z * 0.85;
-      const x = (s.x - mx * 30 * depth + t * 0.004 * depth) % w;
-      let y = (s.y - sy * 0.25 * depth - my * 20 * depth) % (h * 1.6);
-      if (y < 0) y += h * 1.6;
-      if (y > h) continue;
-      const a = (0.35 + 0.65 * depth) * (reduced ? 1 : 0.65 + 0.35 * Math.sin(t / 700 + s.tw));
-      const r = 0.4 + depth * 1.3;
-      ctx.globalAlpha = a; ctx.fillStyle = s.hue;
-      ctx.beginPath(); ctx.arc(x < 0 ? x + w : x, y, r, 0, 6.283); ctx.fill();
-    }
-    if (!reduced) {
-      if (!shoot && t > nextShoot) {
-        shoot = { x: Math.random() * w * 0.8 + w * 0.2, y: Math.random() * h * 0.4, vx: -(6 + Math.random() * 4), vy: 2.5 + Math.random() * 2, life: 0 };
-      }
-      if (shoot) {
-        shoot.life++; shoot.x += shoot.vx; shoot.y += shoot.vy;
-        const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x - shoot.vx * 14, shoot.y - shoot.vy * 14);
-        g.addColorStop(0, "rgba(255,255,255,.9)"); g.addColorStop(1, "rgba(108,240,255,0)");
-        ctx.globalAlpha = Math.max(0, 1 - shoot.life / 70); ctx.strokeStyle = g; ctx.lineWidth = 1.4;
-        ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x - shoot.vx * 14, shoot.y - shoot.vy * 14); ctx.stroke();
-        if (shoot.life > 70) { shoot = null; nextShoot = t + 4000 + Math.random() * 6000; }
-      }
-    }
-    ctx.globalAlpha = 1;
-    if (!reduced) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
-
-/* ===================== HỆ HÀNH TINH ===================== */
-const System = (() => {
-  const hero = document.getElementById("hero");
-  const cv = document.getElementById("system");
-  const ctx = cv.getContext("2d");
-  const tip = document.getElementById("tip");
-  const avatar = new Image();
-  avatar.src = "assets/avatar.jpg";
-  let w, h, dpr, cx, cy, R, F, copyRight = -1;
-  let yaw = 0.4, pitch = 0.36, vyaw = 0, t = 0, last = performance.now();
-  let hover = null, linked = null, drag = null, visible = true, filterFn = () => true;
-  let screen = [];
-
-  function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
-    w = cv.clientWidth; h = cv.clientHeight;
-    cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const narrow = w < 860;
-    cx = narrow ? w / 2 : w * 0.68;
-    cy = narrow ? h * 0.5 : h * 0.5;
-    R = narrow ? Math.min(w * 0.44, h * 0.9) : Math.min(w * 0.27, h * 0.8);
-    F = R * 3.2;
-    const copy = document.querySelector(".hero-copy");
-    copyRight = narrow ? -1 : copy.getBoundingClientRect().right - cv.getBoundingClientRect().left;
-  }
-  resize(); addEventListener("resize", resize);
-
-  const orbitR = (i) => R * (0.3 + (i / (PROJECTS.length - 1)) * 0.7);
-  function project(x, z) {
-    const xr = x * Math.cos(yaw) - z * Math.sin(yaw);
-    const zr = x * Math.sin(yaw) + z * Math.cos(yaw);
-    const depth = zr * Math.cos(pitch);
-    const p = F / (F - depth);
-    return { x: cx + xr * p, y: cy + zr * Math.sin(pitch) * p, depth, p };
-  }
-
-  function drawOrbit(i, front) {
-    const r = orbitR(i);
-    const p = PROJECTS[i];
-    const on = filterFn(p);
-    ctx.beginPath();
-    let pen = false;
-    for (let k = 0; k <= 120; k++) {
-      const a = (k / 120) * Math.PI * 2;
-      const q = project(Math.cos(a) * r, Math.sin(a) * r);
-      if ((q.depth >= 0) === front) { pen ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y); pen = true; } else pen = false;
-    }
-    const hot = hover === p || linked === p;
-    ctx.strokeStyle = hot ? "rgba(108,240,255,.6)" : `rgba(160,180,255,${on ? (front ? 0.2 : 0.1) : 0.04})`;
-    ctx.lineWidth = hot ? 1.2 : 1;
-    ctx.setLineDash(front ? [] : [2, 5]);
-    ctx.stroke(); ctx.setLineDash([]);
-  }
-
-  function drawSun() {
-    const sr = R * 0.15;
-    const glow = ctx.createRadialGradient(cx, cy, sr * 0.6, cx, cy, sr * 3.6);
-    glow.addColorStop(0, "rgba(255,190,90,.55)"); glow.addColorStop(0.35, "rgba(255,120,60,.16)"); glow.addColorStop(1, "rgba(255,120,60,0)");
-    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy, sr * 3.6, 0, 6.283); ctx.fill();
-    // corona
-    ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.05);
-    for (let k = 0; k < 48; k++) {
-      const a = (k / 48) * Math.PI * 2, len = sr * (1.18 + 0.12 * Math.sin(k * 3.7 + t * 1.5));
-      ctx.strokeStyle = `rgba(255,200,120,${0.12 + 0.1 * Math.sin(k + t)})`; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(Math.cos(a) * sr * 1.04, Math.sin(a) * sr * 1.04); ctx.lineTo(Math.cos(a) * len, Math.sin(a) * len); ctx.stroke();
-    }
-    ctx.restore();
-    // vòng HUD đo đạc
-    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-t * 0.08);
-    ctx.strokeStyle = "rgba(160,180,255,.25)"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(0, 0, sr * 1.5, 0, Math.PI * 1.6); ctx.stroke();
-    for (let k = 0; k < 60; k++) {
-      const a = (k / 60) * Math.PI * 2, l = k % 5 ? 3 : 7;
-      ctx.beginPath(); ctx.moveTo(Math.cos(a) * sr * 1.62, Math.sin(a) * sr * 1.62); ctx.lineTo(Math.cos(a) * (sr * 1.62 + l), Math.sin(a) * (sr * 1.62 + l)); ctx.stroke();
-    }
-    ctx.restore();
-    // avatar
-    ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, sr, 0, 6.283); ctx.closePath(); ctx.clip();
-    if (avatar.complete && avatar.naturalWidth) {
-      const s = Math.max((sr * 2) / avatar.naturalWidth, (sr * 2) / avatar.naturalHeight);
-      ctx.drawImage(avatar, cx - (avatar.naturalWidth * s) / 2, cy - (avatar.naturalHeight * s) / 2, avatar.naturalWidth * s, avatar.naturalHeight * s);
-    }
-    const shade = ctx.createRadialGradient(cx - sr * 0.3, cy - sr * 0.3, sr * 0.2, cx, cy, sr);
-    shade.addColorStop(0, "rgba(255,200,120,0)"); shade.addColorStop(1, "rgba(255,140,40,.45)");
-    ctx.fillStyle = shade; ctx.fillRect(cx - sr, cy - sr, sr * 2, sr * 2);
-    ctx.restore();
-    ctx.strokeStyle = "rgba(255,200,130,.9)"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(cx, cy, sr, 0, 6.283); ctx.stroke();
-    ctx.font = "500 10px 'JetBrains Mono', monospace"; ctx.textAlign = "center";
-    ctx.fillStyle = "rgba(255,200,130,.85)";
-    ctx.fillText("☉ KHÚC VIỆT ANH · LỚP G2V", cx, cy + sr * 1.62 + 24);
-    ctx.textAlign = "left";
-  }
-
-  function drawPlanet(s) {
-    const { p, x, y, r } = s;
-    const on = filterFn(p);
-    const hot = hover === p || linked === p;
-    const behind = x < copyRight + 30;
-    ctx.globalAlpha = on ? (behind ? 0.35 : 1) : 0.18;
-    // hướng sáng: về phía mặt trời
-    const dx = cx - x, dy = cy - y, d = Math.hypot(dx, dy) || 1;
-    const lx = x + (dx / d) * r * 0.45, ly = y + (dy / d) * r * 0.45;
-    if (p.planet.ring) {
-      ctx.save(); ctx.translate(x, y); ctx.rotate(-0.35);
-      ctx.strokeStyle = p.planet.c1 + "88"; ctx.lineWidth = Math.max(1, r * 0.12);
-      ctx.beginPath(); ctx.ellipse(0, 0, r * 2, r * 0.6, 0, Math.PI, Math.PI * 2); ctx.stroke(); ctx.restore();
-    }
-    const halo = ctx.createRadialGradient(x, y, r * 0.8, x, y, r * (hot ? 3.4 : 2.4));
-    halo.addColorStop(0, p.planet.c1 + (hot ? "55" : "30")); halo.addColorStop(1, p.planet.c1 + "00");
-    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(x, y, r * (hot ? 3.4 : 2.4), 0, 6.283); ctx.fill();
-    const g = ctx.createRadialGradient(lx, ly, r * 0.05, x, y, r);
-    g.addColorStop(0, "#ffffff"); g.addColorStop(0.18, p.planet.c1); g.addColorStop(0.7, p.planet.c2); g.addColorStop(1, "#05060f");
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.fill();
-    if (p.planet.ring) {
-      ctx.save(); ctx.translate(x, y); ctx.rotate(-0.35);
-      ctx.strokeStyle = p.planet.c1 + "cc"; ctx.lineWidth = Math.max(1, r * 0.12);
-      ctx.beginPath(); ctx.ellipse(0, 0, r * 2, r * 0.6, 0, 0, Math.PI); ctx.stroke(); ctx.restore();
-    }
-    if (p.planet.moon) {
-      const ma = t * 1.6 + p.phase;
-      const mx = x + Math.cos(ma) * r * 2.1, my = y + Math.sin(ma) * r * 0.8;
-      ctx.fillStyle = "#cfd6ff"; ctx.beginPath(); ctx.arc(mx, my, Math.max(1.4, r * 0.18), 0, 6.283); ctx.fill();
-    }
-    // nhãn
-    const narrow = w < 860;
-    if ((!narrow && !behind) || hot) {
-      ctx.font = `${hot ? 500 : 400} 11px 'JetBrains Mono', monospace`;
-      const label = `${p.no} ${p.title.toUpperCase()}`, tw = ctx.measureText(label).width;
-      const side = x + r + 32 + tw > w - 16 ? -1 : 1;
-      const lx2 = x + side * (r + 10), ly2 = y - r - 10;
-      ctx.strokeStyle = hot ? "rgba(108,240,255,.8)" : "rgba(160,180,255,.3)"; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(x + side * r * 0.7, y - r * 0.7); ctx.lineTo(lx2, ly2); ctx.lineTo(lx2 + side * 14, ly2); ctx.stroke();
-      ctx.fillStyle = hot ? "#6cf0ff" : "rgba(180,188,220,.75)";
-      ctx.fillText(label, side > 0 ? lx2 + 18 : lx2 - 18 - tw, ly2 + 4);
-    }
-    if (hot) { // khung ngắm
-      const b = r + 9, l = 6;
-      ctx.strokeStyle = "#6cf0ff"; ctx.lineWidth = 1.2;
-      for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
-        ctx.beginPath(); ctx.moveTo(x + sx * b, y + sy * (b - l)); ctx.lineTo(x + sx * b, y + sy * b); ctx.lineTo(x + sx * (b - l), y + sy * b); ctx.stroke();
-      }
-    }
-    ctx.globalAlpha = 1;
-  }
-
-  function frame(now) {
-    const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    if (visible) {
-      const slow = hover ? 0.15 : 1;
-      if (!reduced) t += dt * slow;
-      if (!drag) { yaw += vyaw; vyaw *= 0.94; if (!reduced) yaw += dt * 0.03 * slow; }
-      ctx.clearRect(0, 0, w, h);
-      screen = PROJECTS.map((p) => {
-        const a = p.phase + t * p.speed, r = orbitR(p.orbit);
-        const q = project(Math.cos(a) * r, Math.sin(a) * r);
-        return { p, x: q.x, y: q.y, depth: q.depth, r: p.planet.size * (R / 420) * q.p };
-      }).sort((a, b) => a.depth - b.depth);
-      PROJECTS.forEach((_, i) => drawOrbit(i, false));
-      screen.filter((s) => s.depth < 0).forEach(drawPlanet);
-      drawSun();
-      PROJECTS.forEach((_, i) => drawOrbit(i, true));
-      screen.filter((s) => s.depth >= 0).forEach(drawPlanet);
-      if (hover) placeTip();
-    }
-    requestAnimationFrame(frame);
-  }
-
-  function hit(e) {
-    const r = cv.getBoundingClientRect();
-    const x = e.clientX - r.left, y = e.clientY - r.top;
-    let best = null;
-    for (let i = screen.length - 1; i >= 0; i--) {
-      const s = screen[i];
-      if (filterFn(s.p) && s.x > copyRight && Math.hypot(s.x - x, s.y - y) < Math.max(14, s.r + 8)) { best = s.p; break; }
-    }
-    return best;
-  }
-  function placeTip() {
-    const s = screen.find((q) => q.p === hover);
-    if (!s) return;
-    tip.style.left = s.x + s.r + "px";
-    tip.style.top = s.y + cv.offsetTop + "px";
-  }
-  function showTip(p) {
-    if (!p) { tip.classList.remove("on"); return; }
-    tip.innerHTML = `THIÊN THỂ №${p.no} · ${TYPE[p.type].toUpperCase()}<b>${esc(p.title)}</b>${p.live ? "<em>● sẵn sàng phóng</em>" : "<em>○ quan sát</em>"} · chạm để mở hồ sơ`;
-    tip.classList.add("on");
-  }
-
-  cv.addEventListener("pointerdown", (e) => {
-    drag = { x: e.clientX, y: e.clientY, moved: 0, id: e.pointerId };
-    if (e.pointerType !== "touch") cv.setPointerCapture(e.pointerId);
-  });
-  cv.addEventListener("pointermove", (e) => {
-    if (drag && e.pointerType !== "touch") {
-      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-      drag.moved += Math.abs(dx) + Math.abs(dy);
-      if (drag.moved > 4) {
-        cv.classList.add("dragging");
-        vyaw = dx * 0.004; yaw += vyaw;
-        pitch = Math.min(1.15, Math.max(0.1, pitch + dy * 0.003));
-      }
-      drag.x = e.clientX; drag.y = e.clientY;
-      return;
-    }
-    const p = hit(e);
-    if (p !== hover) { hover = p; showTip(p); cv.classList.toggle("hovering", !!p); }
-  });
-  const end = (e) => {
-    if (drag && drag.moved <= 6) { const p = hit(e); if (p) openDossier(p); }
-    drag = null; cv.classList.remove("dragging");
-  };
-  cv.addEventListener("pointerup", end);
-  cv.addEventListener("pointercancel", () => { drag = null; cv.classList.remove("dragging"); });
-  cv.addEventListener("pointerleave", () => { if (!drag) { hover = null; showTip(null); cv.classList.remove("hovering"); } });
-
-  new IntersectionObserver(([en]) => (visible = en.isIntersecting)).observe(hero);
-  requestAnimationFrame(frame);
-
-  return {
-    link: (p) => (linked = p),
-    filter: (fn) => (filterFn = fn),
-  };
-})();
-
-/* ===================== DANH MỤC ===================== */
-const rowsEl = document.getElementById("rows");
-const emptyEl = document.getElementById("empty");
-let filter = "all", query = "";
-const matches = (p) => {
-  const q = query.trim().toLowerCase();
-  return (filter === "all" || p.type === filter) && (!q || [p.title, p.desc, ...p.tags].join(" ").toLowerCase().includes(q));
-};
-const orbStyle = (p) => `--c1:${p.planet.c1};--c2:${p.planet.c2}`;
-const rowObserver = new IntersectionObserver((es) => es.forEach((e) => {
-  if (e.isIntersecting) { e.target.classList.add("in"); rowObserver.unobserve(e.target); }
-}), { rootMargin: "0px 0px -40px 0px" });
-
-function renderRows() {
-  const list = PROJECTS.filter(matches);
-  rowsEl.innerHTML = `<div class="row-head" aria-hidden="true"><span>№</span><span></span><span>Thiên thể</span><span class="cls">Phân loại</span><span class="mass">Khối lượng</span><span>Trạng thái</span><span></span></div>` +
-    list.map((p, i) => `<div role="listitem"><button class="row" type="button" data-id="${p.id}" style="--i:${i}" aria-label="Mở hồ sơ ${esc(p.title)}">
-      <span class="no">№${p.no}</span>
-      <span class="orb${p.planet.ring ? " ring" : ""}" style="${orbStyle(p)}" aria-hidden="true"></span>
-      <span class="name">${esc(p.title)}<small>${esc(p.desc)}</small></span>
-      <span class="cls">${TYPE[p.type]} · ${p.year}</span>
-      <span class="mass">${kb(p)}</span>
-      <span class="status${p.live ? " live" : ""}"><i></i>${p.live ? "Sẵn sàng phóng" : p.url && p.url.startsWith("http") ? "Đang hoạt động" : "Mã nguồn mở"}</span>
-      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </button></div>`).join("");
-  emptyEl.hidden = list.length > 0;
-  rowsEl.querySelectorAll(".row").forEach((r) => (reduced ? r.classList.add("in") : rowObserver.observe(r)));
-  System.filter(matches);
-}
-rowsEl.addEventListener("click", (e) => { const b = e.target.closest(".row"); if (b) openDossier(PROJECTS.find((p) => p.id === b.dataset.id)); });
-rowsEl.addEventListener("pointerover", (e) => { const b = e.target.closest(".row"); System.link(b ? PROJECTS.find((p) => p.id === b.dataset.id) : null); });
-rowsEl.addEventListener("pointerleave", () => System.link(null));
-document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
-  document.querySelectorAll(".filters button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-  filter = b.dataset.filter; renderRows();
-}));
-document.getElementById("search").addEventListener("input", (e) => { query = e.target.value; renderRows(); });
-document.getElementById("mCount").textContent = pad(PROJECTS.length);
-document.getElementById("mLive").textContent = pad(PROJECTS.filter((p) => p.live).length);
-
-/* ===================== HỒ SƠ & PHÓNG ===================== */
-const dossier = document.getElementById("dossier");
-const player = document.getElementById("player");
-const pFrame = document.getElementById("pFrame");
-let current = null;
-
-const EXANH_ART = `<svg viewBox="0 0 400 250" width="100%" height="100%" aria-hidden="true">
-  <defs><radialGradient id="ea" cx="38%" cy="32%"><stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#7dffb0"/><stop offset=".75" stop-color="#0f6b4a"/><stop offset="1" stop-color="#05060f"/></radialGradient>
-  <radialGradient id="eb"><stop offset="0" stop-color="#7dffb055"/><stop offset="1" stop-color="#7dffb000"/></radialGradient></defs>
-  <rect width="400" height="250" fill="#070818"/>
-  <circle cx="200" cy="125" r="110" fill="url(#eb)"/>
-  <ellipse cx="200" cy="125" rx="150" ry="40" fill="none" stroke="#a0b4ff33" stroke-dasharray="3 6"/>
-  <circle cx="200" cy="125" r="62" fill="url(#ea)"/>
-  <path d="M176 150c0-30 18-52 50-56 2 34-18 54-50 56Zm0 0c14-16 28-32 42-50" fill="none" stroke="#05060f" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
-  <circle cx="338" cy="112" r="4" fill="#cfd6ff"/>
-  <text x="20" y="232" fill="#7d86a8" font-family="JetBrains Mono" font-size="11" letter-spacing="2">EXANH.ONLINE · THIÊN THỂ №01</text>
-</svg>`;
-
-function mountScaled(box, { html, src, vw }) {
-  const f = document.createElement("iframe");
-  f.setAttribute("tabindex", "-1"); f.setAttribute("aria-hidden", "true"); f.title = "";
-  if (html) { f.setAttribute("sandbox", "allow-scripts"); f.srcdoc = html; } else f.src = src;
-  box.appendChild(f);
-  const fit = () => { const s = box.clientWidth / vw; f.style.width = vw + "px"; f.style.height = box.clientHeight / s + "px"; f.style.transform = `scale(${s})`; };
-  fit(); new ResizeObserver(fit).observe(box);
-}
-
-function openDossier(p) {
-  current = p;
-  document.getElementById("dCode").textContent = `HỒ SƠ THIÊN THỂ · №${p.no}`;
-  const orb = document.getElementById("dOrb");
-  orb.style.cssText = orbStyle(p); orb.className = "orb big" + (p.planet.ring ? " ring" : "");
-  document.getElementById("dType").textContent = `${TYPE[p.type]} · phát hiện ${p.year}`;
-  document.getElementById("dTitle").textContent = p.title;
-  document.getElementById("dDesc").textContent = p.desc;
-  document.getElementById("dTags").innerHTML = p.tags.map((t) => `<li>${esc(t)}</li>`).join("");
-  const au = (0.6 + p.orbit * 0.72).toFixed(2), period = ((Math.PI * 2) / p.speed).toFixed(1);
-  document.getElementById("dData").innerHTML = [
-    ["Phân loại", TYPE[p.type]], ["Khối lượng", kb(p)],
-    ["Bán kính quỹ đạo", `${au} AU`], ["Chu kỳ", `${period} giây`],
-    ["Trạng thái", p.live ? "Sẵn sàng phóng" : "Đang hoạt động"], ["Giấy phép", "Miễn phí sử dụng"],
-  ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
-  const prev = document.getElementById("dPreview");
-  prev.innerHTML = "";
-  if (p.art) prev.innerHTML = `<div class="art">${EXANH_ART}</div>`;
-  else if (p.live) mountScaled(prev, { html: p.live, vw: 760 });
-  else if (p.src) mountScaled(prev, { src: p.src, vw: 1280 });
-  prev.insertAdjacentHTML("beforeend", '<span class="scan"></span>');
+/* ===================== HTML các cảnh ===================== */
+const ICON_ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
+document.getElementById("scenes").innerHTML = PROJECTS.map((p, i) => {
   const acts = [];
-  if (p.live) acts.push(`<button class="btn primary" data-act="launch">Phóng ngay <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"/></svg></button>`);
-  if (p.url) acts.push(`<a class="btn ${p.live ? "ghost" : "primary"}" href="${p.url}"${p.url.startsWith("http") ? ' target="_blank" rel="noreferrer"' : ""}>Mở web ↗</a>`);
-  if (p.live) acts.push(`<button class="btn ghost" data-act="download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19h14"/></svg>Tải .html</button>`);
-  if (p.download) acts.push(`<a class="btn ghost" href="${p.download}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19h14"/></svg>Tải .zip</a>`);
-  document.getElementById("dActions").innerHTML = acts.join("");
-  if (!dossier.open) dossier.showModal();
-}
+  if (p.live) acts.push(`<button class="btn solid" type="button" data-launch="${p.id}">Trải nghiệm ngay ${ICON_ARROW}</button>`);
+  if (p.url) acts.push(`<a class="btn ${p.live ? "ghost" : "solid"}" href="${p.url}"${p.url.startsWith("http") ? ' target="_blank" rel="noreferrer"' : ""}>Mở website ${p.live ? "" : ICON_ARROW}</a>`);
+  if (p.live) acts.push(`<button class="btn link" type="button" data-dl="${p.id}">Tải về .html</button>`);
+  if (p.download) acts.push(`<a class="btn ghost" href="${p.download}">Tải mã nguồn</a>`);
+  return `<section class="scene project" id="p${i + 1}" data-scene="${i + 1}" aria-labelledby="t${i + 1}">
+    <div class="content">
+      <p class="p-no"><b>${p.no}</b> / ${pad(PROJECTS.length)} · Hành tinh</p>
+      <h2 class="p-title" id="t${i + 1}">${esc(p.title)}</h2>
+      <p class="p-kind">${esc(p.tagline)}</p>
+      <dl class="p-meta"><div><dt>Loại</dt><dd>${p.kind}</dd></div><div><dt>Kích thước</dt><dd>${p.size}</dd></div><div><dt>Năm</dt><dd>${p.year}</dd></div></dl>
+      <p class="p-desc">${esc(p.desc)}</p>
+      <div class="p-actions">${acts.join("")}</div>
+    </div>
+  </section>`;
+}).join("");
+document.getElementById("index").innerHTML = PROJECTS.map((p, i) =>
+  `<li><a href="#p${i + 1}"><span class="n">${p.no}</span><span class="t">${esc(p.title)}</span><span class="k">${p.kind}</span></a></li>`).join("");
 
+const scenes = [...document.querySelectorAll(".scene")];
+const railNames = ["Khởi hành", ...PROJECTS.map((p) => p.title), "Hạ cánh"];
+const rail = document.getElementById("rail");
+rail.innerHTML = scenes.map((s, i) => `<a href="#${s.id}"><span>${pad(i)} · ${esc(railNames[i])}</span><i></i></a>`).join("");
+const railLinks = [...rail.children];
+const sceneIO = new IntersectionObserver((es) => es.forEach((e) => {
+  if (!e.isIntersecting) return;
+  scenes.forEach((s) => s.classList.toggle("active", s === e.target));
+  const i = scenes.indexOf(e.target);
+  railLinks.forEach((a, k) => a.classList.toggle("on", k === i));
+}), { threshold: 0.35 });
+scenes.forEach((s) => sceneIO.observe(s));
+
+/* ===================== Trải nghiệm & tải về ===================== */
+const launch = document.getElementById("launch");
+const frame = document.getElementById("launchFrame");
+let current = null;
 function download(p) {
-  const url = URL.createObjectURL(new Blob([p.live], { type: "text/html;charset=utf-8" }));
+  const url = URL.createObjectURL(new Blob([p.live()], { type: "text/html;charset=utf-8" }));
   const a = Object.assign(document.createElement("a"), { href: url, download: `${p.id}.html` });
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+document.addEventListener("click", (e) => {
+  const l = e.target.closest("[data-launch]"), d = e.target.closest("[data-dl]");
+  if (l) {
+    current = PROJECTS.find((p) => p.id === l.dataset.launch);
+    document.getElementById("launchNo").textContent = current.no;
+    document.getElementById("launchTitle").textContent = current.title;
+    frame.srcdoc = current.live();
+    launch.showModal();
+  } else if (d) download(PROJECTS.find((p) => p.id === d.dataset.dl));
+});
+document.getElementById("launchDl").addEventListener("click", () => current && download(current));
+document.getElementById("launchClose").addEventListener("click", () => launch.close());
+launch.addEventListener("close", () => { frame.srcdoc = ""; });
 
-function launch(p) {
-  dossier.close();
-  document.getElementById("pTitle").textContent = `${p.title} — module №${p.no}`;
-  pFrame.srcdoc = p.live;
-  player.showModal();
-  const cd = document.getElementById("countdown");
-  if (reduced) return;
-  let n = 3;
-  cd.classList.add("on");
-  const b = cd.querySelector("b");
-  const step = () => {
-    if (n === 0) { cd.classList.remove("on"); return; }
-    b.textContent = n; b.style.animation = "none"; void b.offsetWidth; b.style.animation = "";
-    n--; setTimeout(step, 420);
+/* ===================== Bề mặt procedural (chạy trong Web Worker) ===================== */
+function surfaceWorker() {
+  const perm = new Uint8Array(512);
+  { let s = 1337; const p = [...Array(256).keys()];
+    for (let i = 255; i > 0; i--) { s = (s * 16807) % 2147483647; const j = s % (i + 1); [p[i], p[j]] = [p[j], p[i]]; }
+    for (let i = 0; i < 512; i++) perm[i] = p[i & 255]; }
+  const fade = (t) => t * t * t * (t * (t * 6 - 15) + 10);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const grad = (h, x, y, z) => { h &= 15; const u = h < 8 ? x : y, v = h < 4 ? y : h === 12 || h === 14 ? x : z; return ((h & 1) ? -u : u) + ((h & 2) ? -v : v); };
+  function perlin(x, y, z) { // Perlin noise cải tiến, trả về ~[0,1]
+    const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+    x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+    const u = fade(x), v = fade(y), w = fade(z);
+    const A = perm[X] + Y, AA = perm[A] + Z, AB = perm[A + 1] + Z, B = perm[X + 1] + Y, BA = perm[B] + Z, BB = perm[B + 1] + Z;
+    const n = lerp(lerp(lerp(grad(perm[AA], x, y, z), grad(perm[BA], x - 1, y, z), u), lerp(grad(perm[AB], x, y - 1, z), grad(perm[BB], x - 1, y - 1, z), u), v),
+      lerp(lerp(grad(perm[AA + 1], x, y, z - 1), grad(perm[BA + 1], x - 1, y, z - 1), u), lerp(grad(perm[AB + 1], x, y - 1, z - 1), grad(perm[BB + 1], x - 1, y - 1, z - 1), u), v), w);
+    return n * 0.5 + 0.5;
+  }
+  function fbm(x, y, z, oct = 6) {
+    let s = 0, a = 0.5, f = 1, n = 0;
+    for (let i = 0; i < oct; i++) { s += a * perlin(x * f, y * f, z * f); n += a; a *= 0.5; f *= 2.02; }
+    return Math.min(1, Math.max(0, (s / n - 0.5) * 1.9 + 0.5));
+  }
+  const ridge = (x, y, z, oct) => 1 - Math.abs(2 * fbm(x, y, z, oct) - 1);
+  const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const mix3 = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
+  const ramp = (st, t) => { t = Math.min(0.9999, Math.max(0, t)) * (st.length - 1); const i = Math.floor(t); return mix3(st[i], st[i + 1], t - i); };
+
+  const S = {
+    home(x, y, z, lat) {
+      const n = fbm(x * 1.5 + 3, y * 1.5, z * 1.5);
+      const ice = smooth(0.8, 0.92, Math.abs(lat) / (Math.PI / 2) + (n - 0.5) * 0.25);
+      let c, e = null;
+      if (n < 0.53) c = mix3([4, 14, 38], [18, 58, 102], smooth(0.25, 0.53, n));
+      else {
+        const h = smooth(0.53, 0.85, n);
+        c = ramp([[46, 70, 34], [82, 92, 48], [124, 104, 74], [168, 156, 140]], h + (fbm(x * 9, y * 9, z * 9, 3) - 0.5) * 0.25);
+        const cluster = smooth(0.55, 0.75, fbm(x * 6 + 7, y * 6, z * 6, 3));
+        const spark = smooth(0.62, 0.8, perlin(x * 140, y * 140, z * 140));
+        const lit = cluster * spark * (1 - h) * 0.85;
+        if (lit > 0.01) e = [255 * lit, 172 * lit, 96 * lit];
+      }
+      return { c: mix3(c, [232, 236, 242], ice), e };
+    },
+    jungle(x, y, z, lat) {
+      const n = fbm(x * 1.9 + 9, y * 1.9, z * 1.9);
+      const ice = smooth(0.86, 0.96, Math.abs(lat) / (Math.PI / 2));
+      const c = n < 0.5 ? mix3([3, 34, 46], [10, 86, 92], smooth(0.28, 0.5, n))
+        : ramp([[22, 78, 40], [46, 112, 50], [92, 128, 66], [150, 146, 108]], smooth(0.5, 0.82, n) + (fbm(x * 10, y * 10, z * 10, 3) - 0.5) * 0.2);
+      return { c: mix3(c, [228, 238, 236], ice) };
+    },
+    icegiant(x, y, z, lat) {
+      const warp = fbm(x * 2, y * 2, z * 2, 5);
+      const band = (Math.sin(lat * 10 + warp * 4.5) + 1) / 2;
+      const fine = fbm(x * 4, y * 26, z * 4, 4);
+      const c = ramp([[26, 54, 118], [70, 118, 186], [150, 186, 224], [222, 232, 242]], band * 0.75 + fine * 0.25);
+      return { c };
+    },
+    lava(x, y, z) {
+      const n = fbm(x * 2.2, y * 2.2, z * 2.2);
+      const r = ridge(x * 2.8 + 5, y * 2.8, z * 2.8, 5);
+      const crack = smooth(0.88, 0.975, r);
+      const c = mix3([22, 17, 15], [70, 54, 44], n);
+      return { c: mix3(c, [140, 56, 20], crack), e: [255 * crack, 98 * crack, 26 * crack] };
+    },
+    pastel(x, y, z, lat) {
+      const warp = fbm(x * 1.7, y * 1.7, z * 1.7, 5);
+      const band = (Math.sin(lat * 8 + warp * 4) + 1) / 2;
+      return { c: ramp([[128, 94, 136], [204, 140, 152], [234, 190, 166], [246, 224, 204]], band * 0.8 + fbm(x * 4, y * 22, z * 4, 4) * 0.2) };
+    },
+    ice(x, y, z) {
+      const n = fbm(x * 2.6, y * 2.6, z * 2.6);
+      const line = smooth(0.9, 0.985, ridge(x * 4.5 + 2, y * 4.5, z * 4.5, 5));
+      const c = mix3([168, 188, 208], [236, 240, 244], n);
+      return { c: mix3(c, [146, 98, 76], line * 0.7) };
+    },
+    quantum(x, y, z, lat) {
+      const n = fbm(x * 2.6, y * 2.6, z * 2.6);
+      const lon = Math.atan2(z, x);
+      const gx = Math.abs(((lon / Math.PI) * 18 % 1 + 1) % 1 - 0.5), gy = Math.abs(((lat / Math.PI) * 18 % 1 + 1) % 1 - 0.5);
+      const grid = smooth(0.47, 0.5, Math.max(gx, gy)) * smooth(0.5, 0.62, n);
+      const dots = smooth(0.78, 0.9, perlin(x * 90, y * 90, z * 90));
+      const g = Math.max(grid * 0.55, dots * 0.8);
+      return { c: mix3([14, 22, 30], [58, 74, 84], n), e: [104 * g, 222 * g, 232 * g] };
+    },
+    desert(x, y, z, lat) {
+      const n = fbm(x * 1.8, y * 1.8, z * 1.8);
+      const dune = (Math.sin(Math.atan2(z, x) * 26 + n * 12 + lat * 5) + 1) / 2;
+      return { c: ramp([[120, 74, 38], [178, 124, 72], [218, 170, 112], [240, 208, 158]], n * 0.78 + dune * 0.22) };
+    },
+    clouds(x, y, z) {
+      const n = fbm(x * 2.2 + 20, y * 3.4, z * 2.2, 7);
+      return { a: smooth(0.56, 0.86, n) * 0.95 };
+    },
   };
-  step();
+
+  self.onmessage = ({ data: { id, type, W, H } }) => {
+    const fn = S[type];
+    const c = new Uint8Array(W * H * 4);
+    let e = null;
+    for (let j = 0; j < H; j++) {
+      const lat = ((j + 0.5) / H - 0.5) * Math.PI, cl = Math.cos(lat), sl = Math.sin(lat); // hàng 0 = cực nam (DataTexture)
+      for (let i = 0; i < W; i++) {
+        const lon = ((i + 0.5) / W) * Math.PI * 2;
+        const o = fn(cl * Math.cos(lon), sl, -cl * Math.sin(lon), lat), k = (j * W + i) * 4;
+        if (o.a !== undefined) { c[k] = c[k + 1] = c[k + 2] = o.a * 255; c[k + 3] = 255; continue; } // alphaMap đọc kênh G
+        c[k] = o.c[0]; c[k + 1] = o.c[1]; c[k + 2] = o.c[2]; c[k + 3] = 255;
+        if (o.e) { if (!e) { e = new Uint8Array(W * H * 4); } e[k] = o.e[0]; e[k + 1] = o.e[1]; e[k + 2] = o.e[2]; e[k + 3] = 255; }
+      }
+    }
+    self.postMessage({ id, c, e }, e ? [c.buffer, e.buffer] : [c.buffer]);
+  };
 }
 
-document.getElementById("dActions").addEventListener("click", (e) => {
-  const a = e.target.closest("[data-act]");
-  if (!a || !current) return;
-  a.dataset.act === "launch" ? launch(current) : download(current);
-});
-document.getElementById("pDownload").addEventListener("click", () => current && download(current));
-document.querySelectorAll("[data-close]").forEach((b) => b.addEventListener("click", () => b.closest("dialog").close()));
-[dossier, player].forEach((d) => d.addEventListener("click", (e) => { if (e.target === d) d.close(); }));
-player.addEventListener("close", () => { pFrame.srcdoc = ""; document.getElementById("countdown").classList.remove("on"); });
-dossier.addEventListener("close", () => { document.getElementById("dPreview").innerHTML = ""; });
+const workerURL = URL.createObjectURL(new Blob([`(${surfaceWorker.toString()})()`], { type: "text/javascript" }));
+const pool = Array.from({ length: Math.max(2, Math.min(4, (navigator.hardwareConcurrency || 4) - 1)) }, () => new Worker(workerURL));
+let jobId = 0;
+const queue = [], waiting = new Map(), idle = [...pool];
+pool.forEach((w) => (w.onmessage = ({ data }) => { waiting.get(data.id)(data); waiting.delete(data.id); idle.push(w); pump(); }));
+function pump() { while (idle.length && queue.length) { const job = queue.shift(); idle.pop().postMessage(job); } }
+function bake(type, W, H) {
+  return new Promise((resolve) => {
+    const id = ++jobId;
+    waiting.set(id, ({ c, e }) => {
+      const tex = (arr) => { const t = new THREE.DataTexture(arr, W, H, THREE.RGBAFormat); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = THREE.RepeatWrapping; t.magFilter = THREE.LinearFilter; t.minFilter = THREE.LinearMipmapLinearFilter; t.generateMipmaps = true; t.anisotropy = 8; t.needsUpdate = true; return t; };
+      resolve({ map: tex(c), emissive: e ? tex(e) : null });
+    });
+    queue.push({ id, type, W, H }); pump();
+  });
+}
+const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+const hash1 = (n) => { const s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s); };
 
-/* ===================== HẰNG SỐ: dao động ký ===================== */
-document.querySelectorAll(".osc").forEach((cv, i) => {
-  const ctx = cv.getContext("2d");
-  let on = false;
-  new IntersectionObserver(([e]) => (on = e.isIntersecting)).observe(cv);
-  const colors = ["#6cf0ff", "#c86bff", "#ffb547", "#8f9bff"];
-  const draw = (t) => {
-    if (on) {
-      const dpr = Math.min(devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
-      if (cv.width !== w * dpr) { cv.width = w * dpr; cv.height = h * dpr; }
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
-      ctx.strokeStyle = colors[i]; ctx.lineWidth = 1.2; ctx.globalAlpha = 0.85;
-      ctx.beginPath();
-      for (let x = 0; x <= w; x += 2) {
-        const k = x / w, tt = reduced ? 0 : t / 1000;
-        const y = h / 2 + Math.sin(k * (8 + i * 3) + tt * (1.5 + i * 0.4)) * h * 0.22 * Math.sin(k * Math.PI) + Math.sin(k * 40 + tt * 6) * 1.5;
-        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+/* ===================== Cảnh 3D ===================== */
+const canvas = document.getElementById("space");
+const loader = document.getElementById("loader");
+const loadPct = document.getElementById("loadPct");
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+} catch (err) {
+  document.body.classList.add("no-webgl");
+  loader.classList.add("done");
+}
+
+if (renderer) {
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 5000);
+  const LIGHT_DIR = new THREE.Vector3(-1, 0.42, -0.18).normalize();
+  const sun = new THREE.DirectionalLight(0xfff0dc, 3.1);
+  sun.position.copy(LIGHT_DIR);
+  scene.add(sun, new THREE.AmbientLight(0x1a2233, 0.2));
+
+  /* --- sao --- */
+  function starLayer(count, size, opacity, spread) {
+    const g = new THREE.BufferGeometry();
+    const pos = new Float32Array(count * 3), col = new Float32Array(count * 3);
+    const c = new THREE.Color();
+    for (let i = 0; i < count; i++) {
+      let v;
+      if (spread === "band") { // dải Ngân Hà
+        const a = Math.random() * Math.PI * 2, r = 900 + Math.random() * 500, h = (Math.random() + Math.random() + Math.random() - 1.5) * 90;
+        v = new THREE.Vector3(Math.cos(a) * r, h, Math.sin(a) * r).applyAxisAngle(new THREE.Vector3(1, 0, 0.4).normalize(), 1.1);
+      } else {
+        v = new THREE.Vector3().randomDirection().multiplyScalar(700 + Math.random() * 800);
       }
-      ctx.stroke(); ctx.globalAlpha = 1;
+      pos.set([v.x, v.y, v.z - 250], i * 3);
+      const t = Math.random();
+      c.setRGB(...(t < 0.1 ? [1, 0.82, 0.62] : t < 0.2 ? [0.7, 0.8, 1] : [1, 1, 1]));
+      col.set([c.r, c.g, c.b], i * 3);
     }
-    requestAnimationFrame(draw);
-  };
-  requestAnimationFrame(draw);
-});
-const countIO = new IntersectionObserver((es) => es.forEach((e) => {
-  if (!e.isIntersecting) return;
-  const el = e.target, to = +el.dataset.count;
-  let n = 0;
-  const tick = () => { el.textContent = pad(n); if (n++ < to) setTimeout(tick, reduced ? 0 : 110); };
-  tick(); countIO.unobserve(el);
-}), { threshold: 0.6 });
-document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    g.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    const m = new THREE.PointsMaterial({ size, sizeAttenuation: false, vertexColors: true, transparent: true, opacity, depthWrite: false });
+    scene.add(new THREE.Points(g, m));
+  }
+  starLayer(5200, 1.3, 0.75);
+  starLayer(500, 2.4, 0.95);
+  starLayer(9000, 1.0, 0.35, "band");
 
-/* ===================== HUD: đồng hồ, toạ độ, reveal ===================== */
-const clock = document.getElementById("clock");
-setInterval(() => { clock.textContent = "UTC " + new Date().toISOString().slice(11, 19); }, 1000);
-const coords = document.getElementById("coords");
-addEventListener("pointermove", (e) => {
-  const ra = (e.clientX / innerWidth) * 24, dec = 90 - (e.clientY / innerHeight) * 180;
-  const h = Math.floor(ra), m = Math.floor((ra - h) * 60), s = Math.floor(((ra - h) * 60 - m) * 60);
-  const d = Math.floor(Math.abs(dec)), dm = Math.floor((Math.abs(dec) - d) * 60);
-  coords.textContent = `RA ${pad(h)}h ${pad(m)}m ${pad(s)}s · DEC ${dec < 0 ? "−" : "+"}${pad(d)}° ${pad(dm)}′`;
-}, { passive: true });
-const revealIO = new IntersectionObserver((es) => es.forEach((e) => {
-  if (e.isIntersecting) { e.target.classList.add("in"); revealIO.unobserve(e.target); }
-}), { threshold: 0.15 });
-document.querySelectorAll(".reveal").forEach((el) => revealIO.observe(el));
+  /* --- tinh vân & mặt trời (sprite) --- */
+  function glowTexture(stops) {
+    const c = document.createElement("canvas"); c.width = c.height = 256;
+    const x = c.getContext("2d"), g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+    stops.forEach(([o, col]) => g.addColorStop(o, col));
+    x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  }
+  function sprite(tex, pos, scale, opacity) {
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity, blending: THREE.AdditiveBlending, depthWrite: false }));
+    s.position.copy(pos); s.scale.setScalar(scale); scene.add(s); return s;
+  }
+  const neb = (r, g, b) => glowTexture([[0, `rgba(${r},${g},${b},.55)`], [0.4, `rgba(${r},${g},${b},.18)`], [1, "rgba(0,0,0,0)"]]);
+  sprite(neb(120, 60, 40), new THREE.Vector3(600, 200, -900), 1400, 0.5);
+  sprite(neb(40, 70, 130), new THREE.Vector3(-700, -250, -600), 1300, 0.45);
+  sprite(neb(90, 50, 110), new THREE.Vector3(200, -400, -1300), 1600, 0.35);
+  sprite(neb(140, 90, 50), new THREE.Vector3(-300, 300, 300), 1200, 0.25);
+  const sunPos = new THREE.Vector3(-300, 170, -330);
+  sprite(glowTexture([[0, "rgba(255,250,240,1)"], [0.06, "rgba(255,236,200,.95)"], [0.18, "rgba(255,190,120,.35)"], [0.5, "rgba(255,140,60,.08)"], [1, "rgba(0,0,0,0)"]]), sunPos, 520, 1);
+  sprite(glowTexture([[0, "rgba(255,200,140,.25)"], [1, "rgba(0,0,0,0)"]]), sunPos, 1600, 0.8);
 
-renderRows();
+  /* --- khí quyển --- */
+  const atmoVert = `varying vec3 vN; varying vec3 vV;
+    void main(){ vec4 mv = modelViewMatrix * vec4(position,1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`;
+  const atmoFrag = `uniform vec3 color; uniform vec3 lightDir; uniform float intensity; varying vec3 vN; varying vec3 vV;
+    void main(){ float rim = pow(1.0 - max(dot(vN, vV), 0.0), 2.6); float lit = smoothstep(-0.35, 0.6, dot(vN, lightDir));
+    float a = rim * lit * intensity; gl_FragColor = vec4(color * a, a); }`;
+  const atmos = [];
+  function atmosphere(color, radius, intensity = 1.4) {
+    const m = new THREE.ShaderMaterial({
+      uniforms: { color: { value: new THREE.Color(color) }, lightDir: { value: new THREE.Vector3() }, intensity: { value: intensity } },
+      vertexShader: atmoVert, fragmentShader: atmoFrag, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 96, 96), m);
+    atmos.push(m); return mesh;
+  }
+
+  /* --- vành đai --- */
+  function ring({ inner, outer, tint, tilt }, r) {
+    const c = document.createElement("canvas"); c.width = 512; c.height = 1;
+    const x = c.getContext("2d"), d = x.createImageData(512, 1);
+    for (let i = 0; i < 512; i++) {
+      const t = i / 511;
+      const band = 0.5 + 0.5 * Math.sin(t * 90 + Math.sin(t * 23) * 3), gap = hash1(Math.floor(t * 14)) > 0.25 ? 1 : 0.2;
+      const a = (0.3 + 0.7 * band * (0.6 + 0.4 * hash1(Math.floor(t * 160)))) * gap * smooth(0, 0.08, t) * smooth(1, 0.85, t);
+      d.data.set([tint[0], tint[1], tint[2], a * 210], i * 4);
+    }
+    x.putImageData(d, 0, 0);
+    const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+    const m = new THREE.ShaderMaterial({
+      uniforms: { tex: { value: tex }, inner: { value: inner * r }, outer: { value: outer * r }, lightDir: { value: LIGHT_DIR } },
+      vertexShader: `varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: `uniform sampler2D tex; uniform float inner; uniform float outer; varying vec3 vP;
+        void main(){ float t = (length(vP.xy) - inner) / (outer - inner); vec4 c = texture2D(tex, vec2(t, 0.5)); gl_FragColor = vec4(c.rgb * 1.1, c.a); }`,
+      side: THREE.DoubleSide, transparent: true, depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(new THREE.RingGeometry(inner * r, outer * r, 160, 1), m);
+    mesh.rotation.x = Math.PI / 2 - 0.28; mesh.rotation.y = tilt;
+    return mesh;
+  }
+
+  /* --- hành tinh --- */
+  const planets = [];
+  function addPlanet({ type, r, atmo, clouds, ringCfg, pos, res }) {
+    const group = new THREE.Group(); group.position.copy(pos);
+    const mat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.92, metalness: 0 });
+    const body = new THREE.Mesh(new THREE.SphereGeometry(r, 128, 128), mat);
+    body.rotation.z = 0.32;
+    group.add(body);
+    group.add(atmosphere(atmo, r * 1.045, type === "home" ? 1.8 : 1.3));
+    let cloud = null;
+    if (clouds) {
+      cloud = new THREE.Mesh(new THREE.SphereGeometry(r * 1.012, 128, 128), new THREE.MeshStandardMaterial({ transparent: true, opacity: 0, depthWrite: false, roughness: 1 }));
+      cloud.rotation.z = 0.32; group.add(cloud);
+    }
+    if (ringCfg) group.add(ring(ringCfg, r));
+    scene.add(group);
+    const pl = { group, body, cloud, mat, type, res, r };
+    planets.push(pl);
+    return pl;
+  }
+  async function texturePlanet(pl) {
+    const { map, emissive } = await bake(pl.type, pl.res, pl.res / 2);
+    pl.mat.map = map; pl.mat.color.set(0xffffff);
+    if (emissive) { pl.mat.emissiveMap = emissive; pl.mat.emissive.set(0xffffff); pl.mat.emissiveIntensity = pl.type === "home" ? 0.9 : pl.type === "lava" ? 1.1 : 1.4; }
+    if (["lava", "ice", "desert"].includes(pl.type)) { pl.mat.bumpMap = map; pl.mat.bumpScale = 0.6; }
+    pl.mat.needsUpdate = true;
+    if (pl.cloud) {
+      const c = await bake("clouds", Math.min(pl.res, 1024), Math.min(pl.res, 1024) / 2);
+      pl.cloud.material.alphaMap = c.map; pl.cloud.material.color.set(0xffffff); pl.cloud.material.opacity = pl.type === "home" ? 0.8 : 0.7; pl.cloud.material.needsUpdate = true;
+    }
+  }
+
+  const HERO = { pos: new THREE.Vector3(16, -11.5, 14), r: 12 };
+  const home = addPlanet({ type: "home", r: HERO.r, atmo: "#8fb8ff", clouds: true, pos: HERO.pos, res: 1024 });
+  const XS = [12, 40, -34, 44, -38, 34, -28], YS = [6, 16, -12, 18, -14, 12, -6];
+  PROJECTS.forEach((p, i) => {
+    p.pos = new THREE.Vector3(XS[i], YS[i], -70 - i * 75);
+    p.pl = addPlanet({ type: p.planet.type, r: p.planet.r, atmo: p.planet.atmo, clouds: p.planet.clouds, ringCfg: p.planet.ring, pos: p.pos, res: 512 });
+  });
+
+  /* --- khung hình camera cho từng cảnh --- */
+  let keys = [];
+  function buildKeys() {
+    const mobile = innerWidth / innerHeight < 0.8;
+    camera.fov = mobile ? 58 : 40; camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    keys = [{ pos: new THREE.Vector3(0, 2, 46), look: new THREE.Vector3(mobile ? 12 : 2, mobile ? -25 : 0, 10) }];
+    PROJECTS.forEach((p) => {
+      const r = p.planet.r * (p.planet.ring ? 1.25 : 1);
+      if (mobile) {
+        const look = p.pos.clone().add(new THREE.Vector3(0, -r * 1.15, 0));
+        keys.push({ pos: look.clone().add(new THREE.Vector3(0, 0, r * 4.6)), look });
+      } else {
+        const look = p.pos.clone().add(new THREE.Vector3(-r * 1.25, 0, 0));
+        keys.push({ pos: look.clone().add(new THREE.Vector3(0, r * 0.14, r * 4.4)), look });
+      }
+    });
+    keys.push({ pos: new THREE.Vector3(mobile ? 70 : 120, 60, -170), look: new THREE.Vector3(mobile ? 0 : -30, -6, -300) });
+  }
+  let tops = [];
+  const measure = () => { tops = scenes.map((s) => s.offsetTop); };
+
+  function resize() {
+    renderer.setSize(innerWidth, innerHeight, false);
+    buildKeys(); measure();
+  }
+  resize();
+  addEventListener("resize", resize);
+  addEventListener("load", measure);
+
+  const camPos = keys[0].pos.clone(), camLook = keys[0].look.clone();
+  camera.position.copy(camPos); camera.lookAt(camLook);
+  const target = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+  let mx = 0, my = 0;
+  addEventListener("pointermove", (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }, { passive: true });
+
+  let sceneIdx = 0;
+  function computeTarget() {
+    const y = scrollY;
+    let i = 0;
+    while (i < tops.length - 1 && y >= tops[i + 1]) i++;
+    sceneIdx = i + ((y - tops[i]) / Math.max(1, (tops[i + 1] ?? tops[i] + innerHeight) - tops[i]));
+    if (i >= keys.length - 1) { target.pos.copy(keys[keys.length - 1].pos); target.look.copy(keys[keys.length - 1].look); return; }
+    const span = Math.max(1, tops[i + 1] - tops[i]);
+    const f = smooth(0.18, 0.92, (y - tops[i]) / span);
+    target.pos.lerpVectors(keys[i].pos, keys[i + 1].pos, f);
+    target.look.lerpVectors(keys[i].look, keys[i + 1].look, f);
+    // vòng cung nhẹ khi bay để tránh đi xuyên hành tinh
+    target.pos.y += Math.sin(f * Math.PI) * 4;
+  }
+
+  const v3 = new THREE.Vector3();
+  let last = performance.now();
+  function tick(now) {
+    const dt = Math.min(0.25, (now - last) / 1000); last = now;
+    if (!document.hidden) {
+      computeTarget();
+      const k = reduced ? 1 : 1 - Math.exp(-dt * 3.2);
+      camPos.lerp(target.pos, k); camLook.lerp(target.look, k);
+      const dist = camPos.distanceTo(camLook);
+      camera.position.copy(camPos).add(v3.set(mx * dist * 0.035, -my * dist * 0.025, 0));
+      camera.lookAt(camLook);
+      planets.forEach((p) => { p.group.visible = p.type === "home" ? camPos.distanceTo(p.group.position) < 140 : camPos.distanceTo(p.group.position) < (sceneIdx > keys.length - 1.6 ? 2000 : 72); });
+      if (!reduced) planets.forEach((p) => { p.body.rotation.y += dt * (p.type === "home" ? 0.012 : 0.05); if (p.cloud) p.cloud.rotation.y += dt * (p.type === "home" ? 0.018 : 0.07); });
+      const ld = v3.copy(LIGHT_DIR).transformDirection(camera.matrixWorldInverse);
+      atmos.forEach((m) => m.uniforms.lightDir.value.copy(ld));
+      renderer.render(scene, camera);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // Nung kết cấu song song trong Web Worker; ẩn loader khi hành tinh nhà + hành tinh đầu tiên xong
+  {
+    const order = [home, ...PROJECTS.map((p) => p.pl)];
+    let done = 0;
+    const jobs = order.map((pl) => texturePlanet(pl).then(() => { done++; loadPct.textContent = ` ${Math.round((done / order.length) * 100)}%`; }));
+    Promise.all(jobs.slice(0, 2)).then(() => loader.classList.add("done"));
+    setTimeout(() => loader.classList.add("done"), 6000);
+  }
+}
