@@ -3,157 +3,187 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#fbf6ea" />
-  <meta name="description" content="Xưởng vẽ tay của Khúc Việt Anh — các dự án có thể dùng ngay trên web hoặc tải về." />
+  <meta name="theme-color" content="#f5efe3" />
+  <meta name="description" content="Xưởng sáng tạo của Khúc Việt Anh — dự án, công cụ và template vẽ tay, dùng ngay trên web hoặc tải về miễn phí." />
   <title>Xưởng Vanh — Projects</title>
   <link rel="icon" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sriracha&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="projects.css" />
 </head>
 <body>
-  <!-- Bộ lọc SVG tạo nét "run tay" cho viền -->
-  <svg class="sr-defs" aria-hidden="true" focusable="false">
-    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="n" />
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" />
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n" />
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" />
     </filter>
   </svg>
 
   <a class="skip" href="#works">Bỏ qua tới dự án</a>
 
-  <header class="bar" id="top">
-    <a class="brand" href="index.html" aria-label="VanhKhuc — trang chủ">
+  <!-- ===== NAV ===== -->
+  <header class="nav" id="top">
+    <a class="logo" href="index.html" aria-label="VanhKhuc — trang liên hệ">
       <img src="assets/logo.png" alt="" />
-      <span>VanhKhuc<em>.xưởng</em></span>
+      <span>Vanh<i>.</i></span>
+      <small class="pen">xưởng</small>
     </a>
-    <nav class="nav" aria-label="Điều hướng chính">
-      <a href="index.html">Contact</a>
+    <nav class="links" aria-label="Điều hướng chính">
+      <a href="index.html">Liên hệ</a>
       <a href="cv.html">CV</a>
-      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="projects.html" aria-current="page">Dự án
+        <svg class="scribble-under" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8C25 3 60 3 97 6"/></svg>
+      </a>
     </nav>
-    <button class="theme-toggle sketch-btn" type="button" id="themeToggle" aria-label="Đổi giao diện sáng / bảng đen">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
-    </button>
+    <div class="nav-right">
+      <button class="icon-btn" type="button" id="themeToggle" aria-label="Đổi giao diện sáng / tối">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+      <a class="btn ink small" href="mailto:vanhkhuc2k5@gmail.com">Say hi ✦</a>
+    </div>
   </header>
 
   <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="kicker">sổ tay dự án · tập 01</p>
-        <h1>
-          Những thứ tôi <span class="hl">vẽ ra</span>,<br />
-          bạn <span class="circled">dùng<svg viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path d="M18 52C14 22 76 8 128 10s88 18 82 42-62 34-118 32S10 72 22 40"/></svg></span> được luôn.
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <canvas class="ink-layer" id="ink" aria-hidden="true"></canvas>
+
+      <div class="hero-text">
+        <p class="eyebrow"><span class="dot"></span> Portfolio · Tập 01 — Hà Nội, 2026</p>
+
+        <h1 class="display">
+          <span class="line">Vẽ bằng <span class="tay">tay<svg class="draw u-red" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 18C50 8 120 6 196 14"/><path pathLength="1" d="M30 25C80 18 130 19 170 22"/></svg></span>,</span>
+          <span class="line"><em class="ring">dùng<svg class="draw c-blue" viewBox="0 0 240 110" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M40 20C90 4 200 6 226 40s-30 62-110 62S8 82 12 52 70 10 132 12"/></svg></em> ngay.</span>
         </h1>
-        <p class="lead">Một góc nhỏ gom lại các dự án, công cụ và template của mình. Bấm <b>“Dùng ngay”</b> để chạy thẳng trên trang, hoặc <b>“Tải về”</b> để mang đi xài offline.</p>
-        <div class="hero-actions">
-          <a class="sketch-btn primary" href="#works">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5 19 12 7 19.5Z"/></svg>
-            Xem xưởng
+
+        <p class="lede">Xưởng nhỏ của <b>Khúc Việt Anh</b>: nơi gom các dự án, công cụ và template mình làm. Mọi thứ đều <mark>chạy thẳng trên trang</mark>, hoặc tải về miễn phí.</p>
+
+        <div class="cta-row">
+          <a class="btn ink" href="#works">Mở xưởng
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
           </a>
-          <a class="sketch-btn" href="index.html">Liên hệ mình</a>
+          <a class="btn ghost" href="cv.html">Xem CV</a>
         </div>
-        <svg class="doodle-arrow" viewBox="0 0 160 110" aria-hidden="true"><path d="M8 14c38-8 92 2 110 40 9 19 6 34 2 44M100 86l20 13 12-22"/></svg>
-        <span class="doodle-note">bấm thử nè!</span>
+
+        <p class="pen hint" aria-hidden="true">
+          <svg class="draw" viewBox="0 0 120 70"><path pathLength="1" d="M110 8C70 4 30 18 18 56M6 42l12 16 16-10"/></svg>
+          <span>psst… kéo chuột để vẽ lên trang!</span>
+        </p>
       </div>
 
-      <div class="hero-art">
-        <figure class="polaroid">
-          <span class="tape tape-a" aria-hidden="true"></span>
-          <img src="assets/avatar.jpg" alt="Khúc Việt Anh" />
-          <figcaption>Vanh · full-stack dev ✎</figcaption>
+      <!-- Collage: xem trước thật của các app -->
+      <div class="collage" id="collage" aria-hidden="true">
+        <div class="win w1" data-depth="18"><div class="chrome"><i></i><i></i><i></i><span>hop-mau.html</span></div><div class="screen" data-app="palette"></div><span class="tape"></span></div>
+        <div class="win w2" data-depth="34"><div class="chrome"><i></i><i></i><i></i><span>ca-chua.html</span></div><div class="screen" data-app="pomodoro"></div><span class="tape t2"></span></div>
+        <div class="win w3" data-depth="26"><div class="chrome"><i></i><i></i><i></i><span>giay-nhap.html</span></div><div class="screen" data-app="sketch"></div></div>
+        <figure class="sticker" data-depth="44">
+          <img src="assets/avatar.jpg" alt="" />
+          <figcaption class="pen">hi, mình là Vanh!</figcaption>
         </figure>
-        <div class="sticky s-yellow"><b id="statCount">0</b><span>dự án trong sổ</span></div>
-        <div class="sticky s-mint"><b id="statLive">0</b><span>chạy ngay trên web</span></div>
-        <svg class="star" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 6l6 17 18 1-14 11 5 18-15-10-15 10 5-18L6 24l18-1Z"/></svg>
-        <svg class="squiggle" viewBox="0 0 200 40" aria-hidden="true"><path d="M4 22c14-16 26 16 40 0s26 16 40 0 26 16 40 0 26 16 40 0 22 12 32 4"/></svg>
+        <svg class="draw doodle-star" viewBox="0 0 60 60" data-depth="50"><path pathLength="1" d="M30 6l6 17 18 1-14 11 5 18-15-10-15 10 5-18L6 24l18-1Z"/></svg>
+        <p class="pen note-run" data-depth="40">cái này chạy thật đó →</p>
       </div>
     </section>
 
-    <!-- XƯỞNG / GRID DỰ ÁN -->
-    <section class="works" id="works" aria-labelledby="worksTitle">
-      <div class="section-head">
-        <h2 id="worksTitle"><span class="num">01</span> Xưởng dự án</h2>
-        <p>Lọc theo loại, hoặc gõ tên thứ bạn đang tìm.</p>
+    <!-- ===== MARQUEE ===== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="track">
+        <span>dùng ngay</span><b>✦</b><span>tải về miễn phí</span><b>✦</b><span>vẽ bằng tay</span><b>✦</b><span>code bằng tim</span><b>✦</b><span>mã nguồn mở</span><b>✦</b>
+        <span>dùng ngay</span><b>✦</b><span>tải về miễn phí</span><b>✦</b><span>vẽ bằng tay</span><b>✦</b><span>code bằng tim</span><b>✦</b><span>mã nguồn mở</span><b>✦</b>
       </div>
+    </div>
 
-      <div class="toolbar">
-        <div class="chips" role="group" aria-label="Lọc theo loại">
-          <button class="chip" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
-          <button class="chip" type="button" data-filter="web" aria-pressed="false">Website</button>
-          <button class="chip" type="button" data-filter="tool" aria-pressed="false">Công cụ</button>
-          <button class="chip" type="button" data-filter="template" aria-pressed="false">Template</button>
-          <button class="chip" type="button" data-filter="fun" aria-pressed="false">Vui vẻ</button>
+    <!-- ===== WORKS ===== -->
+    <section class="works" id="works" aria-labelledby="worksTitle">
+      <header class="sec-head reveal">
+        <p class="sec-no">(01)</p>
+        <h2 id="worksTitle" class="display-2">Bộ sưu tập <sup id="count">00</sup></h2>
+        <p class="pen sec-aside">chọn một món, bấm “Dùng ngay” là chạy ↓</p>
+      </header>
+
+      <div class="toolbar reveal">
+        <div class="tabs" role="group" aria-label="Lọc theo loại">
+          <button type="button" data-filter="all" aria-pressed="true">Tất cả</button>
+          <button type="button" data-filter="web" aria-pressed="false">Website</button>
+          <button type="button" data-filter="tool" aria-pressed="false">Công cụ</button>
+          <button type="button" data-filter="template" aria-pressed="false">Template</button>
+          <button type="button" data-filter="fun" aria-pressed="false">Vui vẻ</button>
         </div>
         <label class="search">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
           <span class="sr-only">Tìm dự án</span>
-          <input id="search" type="search" placeholder="tìm dự án…" autocomplete="off" />
+          <input id="search" type="search" placeholder="Tìm một dự án…" autocomplete="off" />
         </label>
       </div>
 
-      <div class="grid" id="grid" aria-live="polite"></div>
-      <p class="empty" id="empty" hidden>Chưa có trang nào khớp… thử từ khoá khác nhé ✎</p>
+      <div class="bento" id="grid" aria-live="polite"></div>
+      <p class="empty pen" id="empty" hidden>Chưa có trang nào khớp… thử từ khoá khác nhé ✎</p>
     </section>
 
-    <!-- QUY TRÌNH -->
+    <!-- ===== PROCESS ===== -->
     <section class="process" aria-labelledby="processTitle">
-      <div class="section-head">
-        <h2 id="processTitle"><span class="num">02</span> Từ nét vẽ tới sản phẩm</h2>
-      </div>
+      <header class="sec-head reveal">
+        <p class="sec-no">(02)</p>
+        <h2 id="processTitle" class="display-2">Từ nét chì <em>tới</em> sản phẩm</h2>
+      </header>
+      <svg class="draw process-path" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M10 40C160 0 320 60 500 30S840 0 990 34"/></svg>
       <ol class="steps">
-        <li>
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 50 44 18l6 6-32 32H12Z"/><path d="m40 22 6 6"/><path d="M8 58h48"/></svg>
+        <li class="reveal">
+          <span class="big-no pen">1</span>
+          <svg class="draw step-ico" viewBox="0 0 64 64" aria-hidden="true"><path pathLength="1" d="M12 50 44 18l6 6-32 32H12ZM40 22l6 6M8 58c12-4 26 2 48-2"/></svg>
           <h3>Phác thảo</h3>
-          <p>Ý tưởng bắt đầu bằng bút chì trên giấy, rồi lên Figma thành wireframe.</p>
+          <p>Ý tưởng bắt đầu bằng bút chì trên giấy, rồi lên Figma thành wireframe gọn gàng.</p>
         </li>
-        <li>
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="m22 20-12 12 12 12M42 20l12 12-12 12M36 14l-8 36"/></svg>
+        <li class="reveal">
+          <span class="big-no pen">2</span>
+          <svg class="draw step-ico" viewBox="0 0 64 64" aria-hidden="true"><path pathLength="1" d="m22 20-12 12 12 12M42 20l12 12-12 12M36 12l-8 40"/></svg>
           <h3>Code &amp; thử</h3>
-          <p>HTML, CSS, JavaScript — có AI phụ debug và kiểm thử từng chi tiết.</p>
+          <p>HTML, CSS, JavaScript — có AI phụ debug, kiểm thử tới từng pixel nhỏ nhất.</p>
         </li>
-        <li>
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8v32M20 28l12 12 12-12"/><path d="M10 44v10h44V44"/></svg>
-          <h3>Chia sẻ</h3>
-          <p>Đưa lên đây để ai cũng có thể dùng ngay hoặc tải về miễn phí.</p>
+        <li class="reveal">
+          <span class="big-no pen">3</span>
+          <svg class="draw step-ico" viewBox="0 0 64 64" aria-hidden="true"><path pathLength="1" d="M8 30 56 10 44 56 30 38 8 30ZM30 38l26-28M30 38v14l7-8"/></svg>
+          <h3>Gửi đi</h3>
+          <p>Đưa lên xưởng để ai cũng có thể dùng ngay, hoặc tải về và tuỳ biến thoải mái.</p>
         </li>
       </ol>
     </section>
 
-    <!-- CTA -->
-    <section class="cta">
-      <div class="cta-card">
-        <span class="tape tape-b" aria-hidden="true"></span>
-        <h2>Có ý tưởng muốn vẽ cùng?</h2>
-        <p>Mình luôn sẵn sàng cho dự án mới, hợp tác hoặc chỉ là một cuộc trò chuyện.</p>
-        <div class="hero-actions">
-          <a class="sketch-btn primary" href="mailto:vanhkhuc2k5@gmail.com">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
-            Gửi email
-          </a>
-          <a class="sketch-btn" href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer">GitHub ↗</a>
-        </div>
+    <!-- ===== CTA ===== -->
+    <section class="outro reveal">
+      <p class="sec-no">(03)</p>
+      <h2 class="display huge">Cùng vẽ <em>gì đó</em><br />nhé?</h2>
+      <a class="mail pen" href="mailto:vanhkhuc2k5@gmail.com">vanhkhuc2k5@gmail.com
+        <svg class="draw" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 12C80 4 200 4 296 10"/></svg>
+      </a>
+      <svg class="draw plane" viewBox="0 0 220 120" aria-hidden="true"><path pathLength="1" d="M8 110C40 60 90 96 120 60S150 10 190 22M190 22l-30 2 10 10ZM190 22l-14 26-6-14"/></svg>
+      <div class="socials">
+        <a href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/vi%E1%BB%87t-anh-kh%C3%BAc-98b37b340/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://www.facebook.com/vanhkhuc2005" target="_blank" rel="noreferrer">Facebook ↗</a>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <span>© 2026 Khúc Việt Anh · vẽ bằng tay, code bằng tim.</span>
-    <a href="#top" class="to-top">lên đầu trang ↑</a>
+    <span>© 2026 Khúc Việt Anh</span>
+    <span class="pen">vẽ bằng tay · code bằng tim</span>
+    <a href="#top">Lên đầu trang ↑</a>
   </footer>
 
-  <!-- Modal chạy dự án trực tiếp -->
+  <!-- ===== PLAYER ===== -->
   <dialog class="player" id="player" aria-labelledby="playerTitle">
-    <div class="player-head">
+    <div class="player-bar">
+      <div class="chrome-dots" aria-hidden="true"><i></i><i></i><i></i></div>
       <h3 id="playerTitle">Dự án</h3>
       <div class="player-actions">
-        <button class="sketch-btn small" type="button" id="playerDownload">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19h14"/></svg>
-          Tải về
+        <button class="btn ghost small" type="button" id="playerDownload">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19h14"/></svg>Tải về
         </button>
-        <button class="sketch-btn small" type="button" id="playerClose" aria-label="Đóng">✕</button>
+        <button class="icon-btn" type="button" id="playerClose" aria-label="Đóng">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
       </div>
     </div>
     <iframe id="playerFrame" title="Khung chạy dự án" sandbox="allow-scripts allow-downloads allow-modals"></iframe>
