@@ -3,111 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Vũ trụ của Khúc Việt Anh — du hành qua 7 hành tinh, mỗi hành tinh là một dự án dùng được ngay trên trang." />
-  <title>Vũ trụ của Vanh — Projects</title>
-  <link rel="icon" href="assets/favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="projects.css" />
-  <link rel="modulepreload" href="assets/vendor/three.module.min.js" />
+  <title>Dự án — Khúc Việt Anh</title>
+  <link rel="canonical" href="index.html#projects" />
+  <meta http-equiv="refresh" content="0; url=index.html#projects" />
 </head>
 <body>
-  <canvas class="space" id="space" aria-hidden="true"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
-
-  <div class="loader" id="loader" aria-hidden="true">
-    <span class="loader-ring"></span>
-    <p>Đang dựng vũ trụ<span id="loadPct">…</span></p>
-  </div>
-
-  <a class="skip" href="#p1">Bỏ qua tới dự án đầu tiên</a>
-
-  <header class="nav">
-    <a class="brand" href="index.html" aria-label="Khúc Việt Anh — trang liên hệ">
-      <img src="assets/logo.png" alt="" />
-      <span>Khúc Việt Anh</span>
-    </a>
-    <nav class="links" aria-label="Điều hướng chính">
-      <a href="index.html">Liên hệ</a>
-      <a href="cv.html">CV</a>
-      <a href="projects.html" aria-current="page">Dự án</a>
-    </nav>
-    <a class="nav-cta" href="#contact">Gửi tín hiệu</a>
-  </header>
-
-  <nav class="rail" id="rail" aria-label="Các điểm dừng của hành trình"></nav>
-
-  <main id="journey">
-    <section class="scene intro" id="start" data-scene="0">
-      <div class="content">
-        <p class="eyebrow"><span class="line"></span>Portfolio · Hà Nội · 2026</p>
-        <h1 class="mega">
-          <span class="w1">Vũ trụ</span>
-          <span class="w2">của những điều <em>Vanh</em> tạo ra</span>
-        </h1>
-        <p class="lede">Bảy dự án, bảy thế giới. Cuộn để du hành — mỗi hành tinh là một dự án bạn có thể dùng ngay trên trang này, hoặc tải về mang đi.</p>
-        <a class="cue" href="#p1"><span class="cue-dot"></span>Cuộn để khởi hành</a>
-      </div>
-    </section>
-
-    <!-- Các cảnh dự án được sinh từ dữ liệu trong projects.js -->
-    <div id="scenes"></div>
-
-    <section class="scene outro" id="contact" data-scene="8">
-      <div class="content">
-        <p class="eyebrow"><span class="line"></span>Điểm cuối hành trình</p>
-        <h2 class="big">Hạ cánh.<br /><em>Và bắt đầu chuyến tiếp theo?</em></h2>
-
-        <div class="outro-grid">
-          <div class="index">
-            <p class="label">Toàn bộ hành tinh</p>
-            <ol id="index"></ol>
-          </div>
-          <div class="pilot">
-            <p class="label">Phi hành gia</p>
-            <div class="pilot-card">
-              <img src="assets/avatar.jpg" alt="Khúc Việt Anh" />
-              <div>
-                <b>Khúc Việt Anh</b>
-                <span>Full-stack developer · Sinh viên Kỹ thuật Phần mềm, Đại học FPT Hà Nội</span>
-              </div>
-            </div>
-            <a class="mail" href="mailto:vanhkhuc2k5@gmail.com">vanhkhuc2k5@gmail.com</a>
-            <div class="socials">
-              <a href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer">GitHub</a>
-              <a href="https://www.linkedin.com/in/vi%E1%BB%87t-anh-kh%C3%BAc-98b37b340/" target="_blank" rel="noreferrer">LinkedIn</a>
-              <a href="https://www.facebook.com/vanhkhuc2005" target="_blank" rel="noreferrer">Facebook</a>
-              <a href="cv.html">Xem CV</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <footer class="foot">
-        <span>© 2026 Khúc Việt Anh</span>
-        <a href="#start">Quay lại điểm xuất phát ↑</a>
-      </footer>
-    </section>
-  </main>
-
-  <!-- Khung trải nghiệm dự án -->
-  <dialog class="launch" id="launch" aria-labelledby="launchTitle">
-    <header class="launch-bar">
-      <p class="launch-no" id="launchNo">01</p>
-      <h3 id="launchTitle">Dự án</h3>
-      <div class="launch-actions">
-        <button class="btn ghost" type="button" id="launchDl">Tải về</button>
-        <button class="btn close" type="button" id="launchClose" aria-label="Đóng">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-        </button>
-      </div>
-    </header>
-    <iframe id="launchFrame" title="Khung chạy dự án" sandbox="allow-scripts allow-downloads allow-modals"></iframe>
-  </dialog>
-
-  <script src="apps.js"></script>
-  <script type="importmap">{ "imports": { "three": "./assets/vendor/three.module.min.js" } }</script>
-  <script type="module" src="projects.js"></script>
+  <p>Đang chuyển tới <a href="index.html#projects">trang dự án</a>…</p>
 </body>
 </html>

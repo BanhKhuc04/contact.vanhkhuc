@@ -3,99 +3,248 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7fbff" />
-  <meta name="description" content="Trang liên hệ cá nhân của Khúc Việt Anh - Full-stack developer." />
-  <title>Khúc Việt Anh — Contact</title>
+  <meta name="theme-color" content="#f7f9fc" />
+  <title>Khúc Việt Anh — Full-stack Developer</title>
+  <meta name="description" content="Portfolio của Khúc Việt Anh — sinh viên Kỹ thuật Phần mềm tại Đại học FPT Hà Nội, định hướng Full-stack Developer. Xem dự án, dùng thử trực tiếp và liên hệ." />
+  <meta property="og:title" content="Khúc Việt Anh — Full-stack Developer" />
+  <meta property="og:description" content="Portfolio, dự án và thông tin liên hệ của Khúc Việt Anh." />
+  <meta property="og:image" content="assets/avatar.jpg" />
+  <meta property="og:type" content="website" />
   <link rel="icon" href="assets/favicon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
-  <div class="page-glow glow-one" aria-hidden="true"></div>
-  <div class="page-glow glow-two" aria-hidden="true"></div>
+  <a class="skip" href="#projects">Bỏ qua tới dự án</a>
 
-  <header class="topbar reveal reveal-1">
-    <a class="brand" href="index.html" aria-label="Khúc Việt Anh - Trang liên hệ">
-      <img src="assets/logo.png" alt="KA logo" />
-      <span>VanhKhuc</span>
-    </a>
-
-    <nav class="nav" aria-label="Điều hướng chính">
-      <a href="index.html" class="active">Contact</a>
-      <a href="cv.html">CV</a>
-      <a href="projects.html">Projects</a>
-    </nav>
-
-    <a class="cv-button" href="cv.html" aria-label="Xem CV trực tiếp">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.2-5.2 9.2-5.2S21.2 12 21.2 12 18 17.2 12 17.2 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.4"/></svg>
-      <span>Xem CV</span>
-    </a>
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="top">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Khúc Việt Anh — đầu trang">
+        <img src="assets/logo.png" alt="" />
+        <span>VanhKhuc</span>
+      </a>
+      <nav class="links" id="links" aria-label="Điều hướng chính">
+        <a href="#about">Giới thiệu</a>
+        <a href="#projects">Dự án</a>
+        <a href="#skills">Kỹ năng</a>
+        <a href="#journey">Hành trình</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-dark btn-sm" href="cv.html">Xem CV</a>
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="links">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <main id="top" class="shell">
-    <section class="hero" id="contact">
-      <div class="intro">
-        <div class="profile-row reveal reveal-2">
-          <div class="avatar-wrap" id="avatarTilt">
-            <div class="avatar-ring"></div>
-            <div class="avatar-halo"></div>
-            <img class="avatar" src="assets/avatar.jpg" alt="Khúc Việt Anh" />
-            <span class="status-dot" title="Open to opportunities"></span>
-          </div>
-          <div class="profile-copy">
-            <strong>Khúc Việt Anh</strong>
-            <span>Full-stack developer</span>
-          </div>
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="status in" style="--d:0"><span class="dot"></span>Sẵn sàng cho cơ hội thực tập &amp; dự án mới</p>
+        <p class="hello in" style="--d:1">Xin chào, mình là</p>
+        <h1 class="name in" style="--d:2">Khúc <span>Việt Anh</span></h1>
+        <p class="role in" style="--d:3"><span id="typed">Full-stack Developer</span><i class="caret" aria-hidden="true"></i></p>
+        <p class="bio in" style="--d:4">Sinh viên năm 3 ngành Kỹ thuật Phần mềm tại <b>Đại học FPT Hà Nội</b>. Mình thích biến ý tưởng thành những sản phẩm web gọn gàng, chạy thật — và tận dụng AI để học nhanh, làm nhanh hơn mỗi ngày.</p>
+        <div class="cta in" style="--d:5">
+          <a class="btn btn-primary" href="#projects">Xem dự án
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="cv.html">Xem CV trực tuyến</a>
         </div>
-
-        <div class="eyebrow reveal reveal-3"><span>GET IN TOUCH</span><i></i></div>
-        <h1 class="reveal reveal-4">Let’s <span>connect.</span></h1>
-        <p class="lead reveal reveal-5">Open to collaborations, projects, and new opportunities.</p>
-
-        <div class="quick-actions reveal reveal-6">
-          <a class="primary-pill" href="mailto:vanhkhuc2k5@gmail.com">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
-            Email me
-          </a>
-          <a class="secondary-pill" href="cv.html">
-            View CV
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
+        <div class="socials in" style="--d:6">
+          <a href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" class="fill"><path d="M12 2.8a9.5 9.5 0 0 0-3 18.52c.48.09.65-.2.65-.46v-1.8c-2.65.58-3.2-1.13-3.2-1.13-.43-1.1-1.06-1.39-1.06-1.39-.87-.6.07-.58.07-.58.96.07 1.47.99 1.47.99.85 1.46 2.24 1.04 2.79.8.09-.62.33-1.04.61-1.28-2.11-.24-4.33-1.05-4.33-4.7 0-1.04.37-1.89.98-2.55-.1-.24-.43-1.21.09-2.52 0 0 .8-.26 2.62.97a9.08 9.08 0 0 1 4.77 0c1.82-1.23 2.62-.97 2.62-.97.52 1.31.19 2.28.09 2.52.61.66.98 1.51.98 2.55 0 3.66-2.23 4.46-4.35 4.69.34.29.64.87.64 1.76v2.61c0 .26.17.55.65.46A9.5 9.5 0 0 0 12 2.8Z"/></svg></a>
+          <a href="https://www.linkedin.com/in/vi%E1%BB%87t-anh-kh%C3%BAc-98b37b340/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" class="fill"><path d="M5 8.5V20H1.3V8.5H5ZM3.16 3A2.15 2.15 0 1 1 3.15 7.3 2.15 2.15 0 0 1 3.16 3ZM22.7 13.4V20H19v-6.16c0-1.55-.55-2.6-1.93-2.6-1.05 0-1.68.71-1.96 1.4-.1.25-.13.59-.13.94V20h-3.7s.05-10.42 0-11.5h3.7v1.63c.49-.76 1.37-1.84 3.34-1.84 2.44 0 4.28 1.6 4.28 5.11Z"/></svg></a>
+          <a href="https://www.facebook.com/vanhkhuc2005" target="_blank" rel="noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" class="fill"><path d="M14 8.5V6.8c0-.7.47-.87.8-.87H17V2.1h-3.04c-3.38 0-4.15 2.54-4.15 4.16V8.5H8v4.3h1.81V22h4.19v-9.2h2.8l.37-4.3H14Z"/></svg></a>
+          <a href="mailto:vanhkhuc2k5@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></a>
         </div>
       </div>
 
-      <div class="contacts" aria-label="Liên kết liên hệ">
-        <a class="contact-card reveal reveal-3" href="mailto:vanhkhuc2k5@gmail.com">
-          <span class="icon-box mail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
-          <span class="contact-text"><b>Email</b><small>vanhkhuc2k5@gmail.com</small></span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
+      <div class="hero-visual in" style="--d:2">
+        <div class="portrait" id="portrait">
+          <div class="portrait-bg" aria-hidden="true"></div>
+          <img src="assets/avatar.jpg" alt="Ảnh chân dung Khúc Việt Anh" width="292" height="300" />
+          <div class="chip chip-a"><span class="chip-ico">🎓</span><div><b>Năm 3 · SE</b><small>Đại học FPT Hà Nội</small></div></div>
+          <div class="chip chip-b"><span class="chip-ico blue">&lt;/&gt;</span><div><b><span data-count="7">0</span> dự án</b><small>dùng thử ngay trên web</small></div></div>
+          <div class="chip chip-c"><span class="chip-ico green">✦</span><div><b>AI-assisted</b><small>code · debug · test</small></div></div>
+        </div>
+      </div>
+    </section>
 
-        <a class="contact-card reveal reveal-4" href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer">
-          <span class="icon-box github-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.5 9.5 0 0 0-3 18.52c.48.09.65-.2.65-.46v-1.8c-2.65.58-3.2-1.13-3.2-1.13-.43-1.1-1.06-1.39-1.06-1.39-.87-.6.07-.58.07-.58.96.07 1.47.99 1.47.99.85 1.46 2.24 1.04 2.79.8.09-.62.33-1.04.61-1.28-2.11-.24-4.33-1.05-4.33-4.7 0-1.04.37-1.89.98-2.55-.1-.24-.43-1.21.09-2.52 0 0 .8-.26 2.62.97a9.08 9.08 0 0 1 4.77 0c1.82-1.23 2.62-.97 2.62-.97.52 1.31.19 2.28.09 2.52.61.66.98 1.51.98 2.55 0 3.66-2.23 4.46-4.35 4.69.34.29.64.87.64 1.76v2.61c0 .26.17.55.65.46A9.5 9.5 0 0 0 12 2.8Z"/></svg></span>
-          <span class="contact-text"><b>GitHub</b><small>github.com/BanhKhuc04</small></span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
+    <!-- ============ STACK MARQUEE ============ -->
+    <div class="marquee" aria-label="Công nghệ mình sử dụng">
+      <div class="track">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Python</span><span>Git &amp; GitHub</span><span>GitHub Pages</span><span>Figma</span><span>VS Code</span><span>Responsive Design</span><span>AI Coding</span>
+        <span aria-hidden="true">HTML5</span><span aria-hidden="true">CSS3</span><span aria-hidden="true">JavaScript</span><span aria-hidden="true">Python</span><span aria-hidden="true">Git &amp; GitHub</span><span aria-hidden="true">GitHub Pages</span><span aria-hidden="true">Figma</span><span aria-hidden="true">VS Code</span><span aria-hidden="true">Responsive Design</span><span aria-hidden="true">AI Coding</span>
+      </div>
+    </div>
 
-        <a class="contact-card reveal reveal-5" href="https://www.facebook.com/vanhkhuc2005" target="_blank" rel="noreferrer">
-          <span class="icon-box facebook-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 8.5V6.8c0-.7.47-.87.8-.87H17V2.1h-3.04c-3.38 0-4.15 2.54-4.15 4.16V8.5H8v4.3h1.81V22h4.19v-9.2h2.8l.37-4.3H14Z"/></svg></span>
-          <span class="contact-text"><b>Facebook</b><small>facebook.com/vanhkhuc2005</small></span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <div class="sec-label reveal"><span>01</span> Giới thiệu</div>
+      <div class="about-grid">
+        <h2 class="about-lead reveal">Mình xây dựng sản phẩm web <span class="hl">gọn gàng, dễ dùng</span> — và luôn tò mò học thêm điều mới.</h2>
+        <div class="about-body reveal">
+          <p>Mình đang theo học Kỹ thuật Phần mềm tại Đại học FPT Hà Nội, định hướng phát triển thành <b>Full-stack Developer</b>. Mục tiêu của mình là tích luỹ kinh nghiệm thực tế, nâng cao kỹ năng lập trình để làm ra những sản phẩm ổn định và hiệu quả.</p>
+          <p>Mình làm quen với quy trình xây dựng website thực tế qua các dự án cá nhân, sử dụng AI như một người đồng hành: hỗ trợ viết code, tìm lỗi, tinh chỉnh giao diện và kiểm thử.</p>
+          <ul class="facts">
+            <li><span>Địa điểm</span><b>Thạch Thất, Hà Nội</b></li>
+            <li><span>Học vấn</span><b>ĐH FPT · 2023 — nay</b></li>
+            <li><span>Email</span><b><a href="mailto:vanhkhuc2k5@gmail.com">vanhkhuc2k5@gmail.com</a></b></li>
+            <li><span>Điện thoại</span><b><a href="tel:0373133565">0373 133 565</a></b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat reveal"><b><span data-count="3">0</span><i>năm</i></b><span>học Kỹ thuật Phần mềm</span></div>
+        <div class="stat reveal"><b><span data-count="7">0</span><i>dự án</i></b><span>cá nhân &amp; công cụ</span></div>
+        <div class="stat reveal"><b><span data-count="2">0</span><i>chứng chỉ</i></b><span>AI từ Google &amp; Coursera</span></div>
+        <div class="stat reveal"><b>100<i>%</i></b><span>miễn phí, dùng thử ngay</span></div>
+      </div>
+    </section>
 
-        <a class="contact-card reveal reveal-6" href="https://www.linkedin.com/in/vi%E1%BB%87t-anh-kh%C3%BAc-98b37b340/" target="_blank" rel="noreferrer">
-          <span class="icon-box linkedin-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8.5V20H1.3V8.5H5ZM3.16 3A2.15 2.15 0 1 1 3.15 7.3 2.15 2.15 0 0 1 3.16 3ZM22.7 13.4V20H19v-6.16c0-1.55-.55-2.6-1.93-2.6-1.05 0-1.68.71-1.96 1.4-.1.25-.13.59-.13.94V20h-3.7s.05-10.42 0-11.5h3.7v1.63c.49-.76 1.37-1.84 3.34-1.84 2.44 0 4.28 1.6 4.28 5.11Z"/></svg></span>
-          <span class="contact-text"><b>LinkedIn</b><small>Việt Anh Khúc</small></span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
+    <!-- ============ PROJECTS ============ -->
+    <section class="section projects" id="projects">
+      <div class="sec-head">
+        <div>
+          <div class="sec-label reveal"><span>02</span> Dự án</div>
+          <h2 class="sec-title reveal">Dự án nổi bật</h2>
+          <p class="sec-sub reveal">Các công cụ có nhãn <b>“Dùng ngay”</b> chạy trực tiếp trên trang này, và bạn có thể tải về miễn phí.</p>
+        </div>
+        <div class="tabs reveal" role="group" aria-label="Lọc dự án">
+          <button type="button" data-filter="all" aria-pressed="true">Tất cả</button>
+          <button type="button" data-filter="web" aria-pressed="false">Website</button>
+          <button type="button" data-filter="tool" aria-pressed="false">Công cụ</button>
+          <button type="button" data-filter="template" aria-pressed="false">Template</button>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section skills" id="skills">
+      <div class="sec-label reveal"><span>03</span> Kỹ năng</div>
+      <h2 class="sec-title reveal">Mình làm việc với</h2>
+      <div class="skill-grid">
+        <article class="skill reveal">
+          <div class="skill-ico"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>
+          <h3>Frontend</h3>
+          <p>Dựng giao diện responsive, gọn và mượt trên mọi màn hình.</p>
+          <ul><li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>Responsive</li></ul>
+        </article>
+        <article class="skill reveal">
+          <div class="skill-ico"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="17" r="3"/></svg></div>
+          <h3>Ngôn ngữ</h3>
+          <p>Nền tảng lập trình từ chương trình Kỹ thuật Phần mềm.</p>
+          <ul><li>JavaScript</li><li>Python cơ bản</li><li>Cấu trúc dữ liệu</li></ul>
+        </article>
+        <article class="skill reveal">
+          <div class="skill-ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 8.5v7M18 11.5c0 4-6 3-10 5"/></svg></div>
+          <h3>Công cụ</h3>
+          <p>Quản lý mã nguồn, thiết kế và triển khai sản phẩm.</p>
+          <ul><li>Git &amp; GitHub</li><li>GitHub Pages</li><li>VS Code</li><li>Figma</li></ul>
+        </article>
+        <article class="skill reveal">
+          <div class="skill-ico"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3Z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8Z"/></svg></div>
+          <h3>AI &amp; tư duy</h3>
+          <p>Dùng AI hiệu quả và chủ động tự tìm giải pháp.</p>
+          <ul><li>AI hỗ trợ lập trình</li><li>Debug &amp; kiểm thử</li><li>Tự học</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY ============ -->
+    <section class="section journey" id="journey">
+      <div class="sec-label reveal"><span>04</span> Hành trình</div>
+      <h2 class="sec-title reveal">Học vấn &amp; chứng chỉ</h2>
+      <ol class="timeline">
+        <li class="reveal">
+          <time>2023 — Hiện tại</time>
+          <div class="tl-card">
+            <span class="tl-tag">Học vấn</span>
+            <h3>Trường Đại học FPT Hà Nội</h3>
+            <p>Sinh viên năm 3 ngành Kỹ thuật Phần mềm (Software Engineering) — định hướng Full-stack Development.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <time>2025</time>
+          <div class="tl-card">
+            <span class="tl-tag cert">Chứng chỉ</span>
+            <h3>AI Foundations for Everyone Specialization</h3>
+            <p>Coursera — nền tảng về trí tuệ nhân tạo và cách ứng dụng vào công việc.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <time>05/2026 — Nay</time>
+          <div class="tl-card">
+            <span class="tl-tag proj">Dự án</span>
+            <h3>eXanh.online</h3>
+            <p>Xây dựng và hoàn thiện website cá nhân với HTML, CSS, JavaScript và sự hỗ trợ của AI.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <time>2026</time>
+          <div class="tl-card">
+            <span class="tl-tag cert">Chứng chỉ</span>
+            <h3>Google AI Professional Certificate</h3>
+            <p>Coursera · Google — ứng dụng AI tạo sinh trong quy trình làm việc thực tế.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact">
+      <div class="contact-card reveal">
+        <div class="contact-text">
+          <div class="sec-label light"><span>05</span> Liên hệ</div>
+          <h2>Cùng tạo nên điều gì đó tuyệt vời nhé!</h2>
+          <p>Mình luôn sẵn sàng cho cơ hội thực tập, cộng tác dự án hoặc đơn giản là một cuộc trò chuyện về công nghệ.</p>
+          <div class="cta">
+            <a class="btn btn-white" href="mailto:vanhkhuc2k5@gmail.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+              vanhkhuc2k5@gmail.com
+            </a>
+            <a class="btn btn-outline-white" href="tel:0373133565">0373 133 565</a>
+          </div>
+        </div>
+        <div class="contact-side">
+          <img src="assets/avatar.jpg" alt="" />
+          <a href="https://github.com/BanhKhuc04" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+          <a href="https://www.linkedin.com/in/vi%E1%BB%87t-anh-kh%C3%BAc-98b37b340/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+          <a href="https://www.facebook.com/vanhkhuc2005" target="_blank" rel="noreferrer">Facebook <span>↗</span></a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer reveal reveal-6">
+  <footer class="footer">
     <div class="footer-brand"><img src="assets/logo.png" alt="" /><span>Build a better version.</span></div>
-    <span>© 2026 Khúc Việt Anh. All rights reserved.</span>
+    <span>© 2026 Khúc Việt Anh</span>
+    <a href="#top">Lên đầu trang ↑</a>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- ============ APP MODAL ============ -->
+  <dialog class="modal" id="modal" aria-labelledby="modalTitle">
+    <div class="modal-bar">
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <h3 id="modalTitle">Dự án</h3>
+      <button class="btn btn-ghost btn-sm" type="button" id="modalDl">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 19h14"/></svg>Tải về
+      </button>
+      <button class="icon-btn" type="button" id="modalClose" aria-label="Đóng">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <iframe id="modalFrame" title="Khung chạy dự án" sandbox="allow-scripts allow-downloads allow-modals"></iframe>
+  </dialog>
+
+  <script src="apps.js"></script>
+  <script src="home.js"></script>
 </body>
 </html>
